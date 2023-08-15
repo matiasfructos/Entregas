@@ -200,6 +200,8 @@ a.custom-card:hover {
   border: 1px solid gray;
   gap: 10px;
   text-align: left;
+  margin: 10px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .tarjeta-title {
@@ -210,4 +212,9 @@ a.custom-card:hover {
 
 .product-title {
   margin: 30px 0;
+}
+
+.tarjeta:hover {
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3%);
 }

@@ -1,43 +1,32 @@
 let URL = "https://japceibal.github.io/emercado-api/cats_products/101.json"
 
-
-
-
-
 fetch(URL)
     .then(res => res.json())
     .then(data => {
         showCard(data.products)
+        console.log(data.products)
     })
 
 
 function showCard(array) {
-    let contenedor = document.getElementById("contenedor")
     array.forEach(element => {
+        let container = document.getElementById("contenedor")
 
-        contenedor.innerHTML += `<div class="card">
-        <div class="card_title">
-            <h2>${element.name}</h2>
-        </div>
-        <div>
-          <p>${element.description}</p>
-          <p>${element.soldCount} </p>
-          <p>Tiene un valor de: ${element.cost} USD</p>
-        </div>
-        <div class="card_image">
-            <img src="${element.image}" alt="${element.name}">
-        </div>
+        container.innerHTML +=
+
+        `<div class="tarjeta">
+            <div class="tarjeta-img">
+                <img src="${element.image}" alt="Imágen de un ${element.name}" width="200">
+            </div>
+            <div class="tarjeta-content">
+                <div class="tarjeta-title">
+                    <h5>${element.name}</h3>
+                    <p>${element.soldCount} vendidos</p>
+                </div>
+                <div class="tarjeta-body">
+                    <h6>${element.description}</h4>
+                </div>
+            </div>
         </div>`
-        
-
     });
 }
-
-
-
-
-// `<p> ${element.name} 
-// ${element.cost} 
-// ${element.description}
-// ${element.soldCount} 
-// <img src="${element.image}"> </p>`;

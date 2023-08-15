@@ -25,6 +25,7 @@ function showCard(array) {
                 </div>
                 <div class="tarjeta-body">
                     <h6>${element.description}</h4>
+                    <p>${element.currency} ${element.cost}</p>
                 </div>
             </div>
         </div>`

@@ -1,3 +1,5 @@
+
+    // Fetch de los datos de los productos
 let URL = "https://japceibal.github.io/emercado-api/cats_products/101.json"
 
 fetch(URL)
@@ -9,7 +11,6 @@ fetch(URL)
 
     const data = localStorage.getItem("userStatus") 
 
-
     // Validacion de usuario
 
   function bienvenidx(){
@@ -20,8 +21,8 @@ fetch(URL)
   }
   bienvenidx()
 
-
   // Cerrar Sesion
+
   const cerrar_sesion = document.getElementById("cerrar_sesion")
 
  
@@ -33,7 +34,8 @@ fetch(URL)
     })   
 
 
-
+    // Muestra de las tarjetas con los productos
+    
 function showCard(array) {
     array.forEach(element => {
         let container = document.getElementById("contenedor")

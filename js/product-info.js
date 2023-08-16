@@ -13,3 +13,15 @@ const data = localStorage.getItem("userStatus")
    }
   }
   bienvenidx()
+
+
+    // Cerrar Sesion
+    const cerrar_sesion = document.getElementById("cerrar_sesion")
+
+ 
+  
+    cerrar_sesion.addEventListener("click", a => {
+
+        localStorage.removeItem("userStatus")
+        window.location.href = "login.html"
+})   

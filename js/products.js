@@ -21,7 +21,19 @@ fetch(URL)
   bienvenidx()
 
 
+  // Cerrar Sesion
+  const cerrar_sesion = document.getElementById("cerrar_sesion")
+
+ 
   
+        cerrar_sesion.addEventListener("click", a => {
+
+            localStorage.removeItem("userStatus")
+            window.location.href = "login.html"
+    })   
+
+
+
 function showCard(array) {
     array.forEach(element => {
         let container = document.getElementById("contenedor")

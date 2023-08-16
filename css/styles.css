@@ -224,9 +224,12 @@ a.custom-card:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: 0 auto;
-  max-width: 300px;
+  height: 70vh;
+  width: 70vh;
+  border: solid;
+  margin: auto;
+  padding: 20px 30px;
+  box-shadow: 7px 13px 37px #000;
 }
 h1, div {
   text-align: center;
@@ -238,3 +241,22 @@ input {
   padding: 8px;
   width: 100%;
 }
+
+#login{
+  margin: 0;
+  height: 40px;
+  margin-bottom: 100px;
+  font-size: 70px;
+
+}
+
+#username, #password{
+
+  margin: 10px;
+  
+
+  }
+
+  .btn{
+    margin: 10px;
+  }

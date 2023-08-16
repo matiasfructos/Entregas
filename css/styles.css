@@ -251,10 +251,9 @@ input {
 }
 
 #username, #password{
-
   margin: 10px;
-  
-
+  border: none;
+  border-bottom: 1px solid black;
   }
 
   .btn{

@@ -218,3 +218,23 @@ a.custom-card:hover {
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
   transform: translateY(-3%);
 }
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 300px;
+}
+h1, div {
+  text-align: center;
+  
+}
+
+input {
+  margin: 5px 0;
+  padding: 8px;
+  width: 100%;
+}

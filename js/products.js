@@ -7,7 +7,21 @@ fetch(URL)
         console.log(data.products)
     })
 
+    const data = localStorage.getItem("userStatus") 
 
+
+    // Validacion de usuario
+
+  function bienvenidx(){
+   if (!data){
+    alert("Debe iniciar Sesion")
+   window.location.href = "login.html"
+   }
+  }
+  bienvenidx()
+
+
+  
 function showCard(array) {
     array.forEach(element => {
         let container = document.getElementById("contenedor")

@@ -6,6 +6,20 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
+
+
+// Validacion de usuario
+
+const data = localStorage.getItem("userStatus") 
+
+  function bienvenidx(){
+   if (!data){
+    alert("Debe iniciar Sesion")
+   window.location.href = "login.html"
+   }
+  }
+  bienvenidx()
+
 function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)

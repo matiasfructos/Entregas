@@ -226,14 +226,11 @@ a.custom-card:hover {
   justify-content: center;
   height: 70vh;
   width: 70vh;
-  border: solid;
+  border: 1px solid black;
+  border-radius: 10px;
   margin: auto;
   padding: 20px 30px;
   box-shadow: 7px 13px 37px #000;
-}
-h1, div {
-  text-align: center;
-  
 }
 
 input {
@@ -247,7 +244,7 @@ input {
   height: 40px;
   margin-bottom: 100px;
   font-size: 70px;
-
+  text-align: center;
 }
 
 #username, #password{

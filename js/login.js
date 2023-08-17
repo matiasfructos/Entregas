@@ -16,10 +16,9 @@ document.addEventListener("DOMContentLoaded", function(){
         return alert("Por favor, rellene todos los campos")
     } else {
         localStorage.setItem("userStatus", true)
-        window.location.href = "login.html"
     }
 
-      // Almacenar el nombre en sessionStorage para usarlo en home.js
+      // Almacenar el nombre en localStorage para usarlo en home.js
 
       localStorage.setItem("username", username);
       localStorage.setItem("password", password);

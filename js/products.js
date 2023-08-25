@@ -10,6 +10,15 @@ bienvenidx()
 const catID = localStorage.getItem("catID")
 let URL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
 
+
+//fetch de los datos
+fetch(URL)
+    .then(res => res.json())
+    .then(data => {
+        showCard(data.products)
+        console.log(data)
+        catName(data.catName)
+    })
 //Selecciona el titulo de la categoría
 
 function catName(cat){
@@ -17,14 +26,9 @@ function catName(cat){
     catName.innerHTML = cat.toLowerCase()
 }
 
-//fetch de los datos
-fetch(URL)
-    .then(res => res.json())
-    .then(data => {
-        showCard(data.products)
-        console.log(data.products)
-        catName(data.catName)
-    })
+//Botones de filtrado
+
+
 
 //crea las tarjetas de los productos
 function showCard(array) {

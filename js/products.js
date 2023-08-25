@@ -42,6 +42,13 @@ function showCard(array) {
     });
 }
 
+function user() {
+    const user = localStorage.getItem("username")
+    const name = document.getElementById("user")
+    name.innerHTML = user
+}
+user()
+
 // Cerrar Sesion
 const cerrar_sesion = document.getElementById("cerrar_sesion")
 

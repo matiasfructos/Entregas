@@ -20,6 +20,7 @@ function bienvenidx() {
 }
 bienvenidx()
 
+
 // Cerrar Sesion
 const cerrar_sesion = document.getElementById("cerrar_sesion")
 

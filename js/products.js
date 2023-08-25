@@ -3,13 +3,19 @@ const data = localStorage.getItem("userStatus")
 
 function bienvenidx() {
     if (!data) {
-        alert("Debe iniciar Sesion")
         window.location.href = "login.html"
     }
 }
 bienvenidx()
+const catID = localStorage.getItem("catID")
+let URL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
 
-let URL = "https://japceibal.github.io/emercado-api/cats_products/101.json"
+//Selecciona el titulo de la categoría
+
+function catName(cat){
+    const catName = document.getElementById("catName")
+    catName.innerHTML = cat.toLowerCase()
+}
 
 //fetch de los datos
 fetch(URL)
@@ -17,6 +23,7 @@ fetch(URL)
     .then(data => {
         showCard(data.products)
         console.log(data.products)
+        catName(data.catName)
     })
 
 //crea las tarjetas de los productos

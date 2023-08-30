@@ -7,58 +7,6 @@ function bienvenidx() {
     }
 }
 bienvenidx()
-const catID = localStorage.getItem("catID")
-let URL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
-
-
-//fetch de los datos
-fetch(URL)
-    .then(res => res.json())
-    .then(data => {
-        showCard(data.products)
-        console.log(data)
-        catName(data.catName)
-    })
-//Selecciona el titulo de la categoría
-
-function catName(cat){
-    const catName = document.getElementById("catName")
-    catName.innerHTML = cat.toLowerCase()
-}
-
-//Botones de filtrado
-
-
-
-//crea las tarjetas de los productos
-function showCard(array) {
-    array.forEach(element => {
-        let container = document.getElementById("contenedor")
-        container.innerHTML +=
-            `<div class="tarjeta">
-                <div class="tarjeta-img">
-                    <img src="${element.image}" alt="Imágen de un ${element.name}" width="200">
-                </div>
-                <div class="tarjeta-content">
-                    <div class="tarjeta-title">
-                        <h5>${element.name}</h3>
-                        <p>${element.soldCount} vendidos</p>
-                    </div>
-                    <div class="tarjeta-body">
-                        <h6>${element.description}</h4>
-                        <p>${element.currency} ${element.cost}</p>
-                    </div>
-                </div>
-            </div>`
-    });
-}
-
-function user() {
-    const user = localStorage.getItem("username")
-    const name = document.getElementById("user")
-    name.innerHTML = user
-}
-user()
 
 // Cerrar Sesion
 const cerrar_sesion = document.getElementById("cerrar_sesion")
@@ -68,6 +16,179 @@ cerrar_sesion.addEventListener("click", a => {
     window.location.href = "login.html"
 })
 
+function user() {
+    const user = localStorage.getItem("username")
+    const name = document.getElementById("user")
+    name.innerHTML = user
+}
+user()
 
+//Código de filtrado y demás
+const ORDER_ASC_BY_COST = "AZ";
+const ORDER_DESC_BY_COST = "ZA";
+const ORDER_BY_PROD_RELEVANCY = "Cant.";
+let currentCategoriesArray = [];
+let currentSortCriteria = undefined;
+let minCost = undefined;
+let maxCost = undefined;
 
+function sortCategories(criteria, array) {
+    let result = [];
+    if (criteria === ORDER_ASC_BY_COST) {
+        result = array.sort(function (a, b) {
+            if (a.cost < b.cost) { return -1; }
+            if (a.cost > b.cost) { return 1; }
+            return 0;
+        });
+    } else if (criteria === ORDER_DESC_BY_COST) {
+        result = array.sort(function (a, b) {
+            if (a.cost > b.cost) { return -1; }
+            if (a.cost < b.cost) { return 1; }
+            return 0;
+        });
+    } else if (criteria === ORDER_BY_PROD_RELEVANCY) {
+        result = array.sort(function (a, b) {
+            let aCount = parseInt(a.soldCount);
+            let bCount = parseInt(b.soldCount);
 
+            if (aCount > bCount) { return -1; }
+            if (aCount < bCount) { return 1; }
+            return 0;
+        });
+    }
+
+    return result;
+}
+
+function showCategoriesList() {
+
+    let htmlContentToAppend = "";
+    for (let i = 0; i < currentCategoriesArray.length; i++) {
+        let product = currentCategoriesArray[i];
+
+        if (((minCost == undefined) || (minCost != undefined && parseInt(product.cost) >= minCost)) &&
+            ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))) {
+
+            htmlContentToAppend += `
+            <div class="list-group-item list-group-item-action cursor-active">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">${product.name} | ${product.cost}</h4>
+                            <small class="text-muted">${product.soldCount} artículos</small>
+                        </div>
+                        <p class="mb-1">${product.description}</p>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+
+        document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
+    }
+}
+
+function sortAndShowCategories(sortCriteria, categoriesArray) {
+    currentSortCriteria = sortCriteria;
+
+    if (categoriesArray != undefined) {
+        currentCategoriesArray = categoriesArray;
+    }
+
+    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
+
+    //Muestro las categorías ordenadas
+    showCategoriesList();
+}
+
+//Función que se ejecuta una vez que se haya lanzado el evento de
+//que el documento se encuentra cargado, es decir, se encuentran todos los
+//elementos HTML presentes.
+document.addEventListener("DOMContentLoaded", function (e) {
+    getJSONData(PRODUCTS_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            currentCategoriesArray = resultObj.data.products
+            showCategoriesList()
+        }
+    });
+
+    document.getElementById("sortAsc").addEventListener("click", function () {
+        sortAndShowCategories(ORDER_ASC_BY_COST);
+    });
+
+    document.getElementById("sortDesc").addEventListener("click", function () {
+        sortAndShowCategories(ORDER_DESC_BY_COST);
+    });
+
+    document.getElementById("sortByCount").addEventListener("click", function () {
+        sortAndShowCategories(ORDER_BY_PROD_RELEVANCY);
+    });
+
+    document.getElementById("clearRangeFilter").addEventListener("click", function () {
+        document.getElementById("rangeFilterCountMin").value = "";
+        document.getElementById("rangeFilterCountMax").value = "";
+
+        minCost = undefined;
+        maxCost = undefined;
+
+        showCategoriesList();
+    });
+
+    document.getElementById("rangeFilterCount").addEventListener("click", function () {
+        //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
+        //de productos por categoría.
+        minCost = document.getElementById("rangeFilterCountMin").value;
+        maxCost = document.getElementById("rangeFilterCountMax").value;
+
+        if ((minCost != undefined) && (minCost != "") && (parseInt(minCost)) >= 0) {
+            minCost = parseInt(minCost);
+        }
+        else {
+            minCost = undefined;
+        }
+
+        if ((maxCost != undefined) && (maxCost != "") && (parseInt(maxCost)) >= 0) {
+            maxCost = parseInt(maxCost);
+        }
+        else {
+            maxCost = undefined;
+        }
+
+        showCategoriesList();
+    });
+
+    document.getElementById("userInputFilter").addEventListener("input", (e) => {
+        const string = e.target.value
+        console.log(string)
+        const filteredArray = currentCategoriesArray.filter(product => {
+            return product.name.toLowerCase().includes(string.toLowerCase()) ||
+                product.description.toLowerCase().includes(string.toLowerCase())
+        })
+
+        let htmlContentToAppend = "";
+
+        for (let i = 0; i < filteredArray.length; i++) {
+            let product = filteredArray[i];
+            htmlContentToAppend += `
+            <div class="list-group-item list-group-item-action cursor-active">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">${product.name} | ${product.cost}</h4>
+                            <small class="text-muted">${product.soldCount} artículos</small>
+                        </div>
+                        <p class="mb-1">${product.description}</p>
+                    </div>
+                </div>
+            </div>
+            `
+            document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
+        }
+    })
+});

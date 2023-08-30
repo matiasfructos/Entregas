@@ -24,8 +24,8 @@ function user() {
 user()
 
 //Código de filtrado y demás
-const ORDER_ASC_BY_COST = "Mayor precio";
-const ORDER_DESC_BY_COST = "Menos precio";
+const ORDER_ASC_BY_COST = "Menor precio";
+const ORDER_DESC_BY_COST = "Mayor precio";
 const ORDER_BY_PROD_RELEVANCY = "Cant.";
 let currentCategoriesArray = [];
 let currentSortCriteria = undefined;

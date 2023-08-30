@@ -19,7 +19,11 @@ function bienvenidx() {
 }
 bienvenidx()
 
-
+function user() {
+    document.getElementById("user").innerHTML = localStorage.getItem("username")
+  }
+  user()
+  
 // Cerrar Sesion
 const cerrar_sesion = document.getElementById("cerrar_sesion")
 

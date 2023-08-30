@@ -27,11 +27,9 @@ cerrar_sesion.addEventListener("click", a => {
 
 
 function user() {
-    const user = localStorage.getItem("username")
-    const name = document.getElementById("user")
-    name.innerHTML = user
-}
-user()
+    document.getElementById("user").innerHTML = localStorage.getItem("username")
+  }
+  user()
 
 function sortCategories(criteria, array) {
     let result = [];

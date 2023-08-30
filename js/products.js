@@ -17,11 +17,9 @@ cerrar_sesion.addEventListener("click", a => {
 })
 
 function user() {
-    const user = localStorage.getItem("username")
-    const name = document.getElementById("user")
-    name.innerHTML = user
-}
-user()
+    document.getElementById("user").innerHTML = localStorage.getItem("username")
+  }
+  user()
 
 //Código de filtrado y demás
 const ORDER_ASC_BY_COST = "Menor precio";
@@ -112,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         if (resultObj.status === "ok") {
             currentCategoriesArray = resultObj.data.products
             showCategoriesList()
+            document.getElementById("title").textContent = resultObj.data.catName.toLowerCase()
         }
     });
 

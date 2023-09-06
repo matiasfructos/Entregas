@@ -68,7 +68,7 @@ function showCategoriesList() {
             ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))) {
 
             htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action cursor-active">
+            <div class="list-group-item list-group-item-action cursor-active" id="${product.id}">
                 <div class="row">
                     <div class="col-3">
                         <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
@@ -83,6 +83,7 @@ function showCategoriesList() {
                 </div>
             </div>
             `
+            
         }
 
         document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
@@ -190,4 +191,30 @@ document.addEventListener("DOMContentLoaded", function (e) {
             document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
         }
     })
+
+
+
+
+// llamado a la id de los products
+
+ // Obtener todos los elementos con la clase "list-group-item"
+ const cardElements = document.querySelectorAll("#prod-list-container");
+function coso() {
+    console.log(cardElements)
+}
+coso()
+ // Agregar un event listener a cada tarjeta
+ cardElements.forEach(card => {
+     card.addEventListener("click", function() {
+         // Código que se ejecutará cuando se haga clic en una tarjeta
+         console.log("Tarjeta clickeada:", card.id);
+         // Puedes realizar acciones específicas para cada tarjeta aquí
+     });
+ });
+
 });
+
+
+
+
+

@@ -9,9 +9,7 @@ function bienvenidx() {
 bienvenidx()
 
 function user() {
-  const user = localStorage.getItem("username")
-  const name = document.getElementById("user")
-  name.innerHTML = user
+  document.getElementById("user").innerHTML = localStorage.getItem("username")
 }
 user()
 

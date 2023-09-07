@@ -58,6 +58,11 @@ function sortCategories(criteria, array) {
     return result;
 }
 
+function setProdID(id) {
+    localStorage.setItem("prodID", id);
+    window.location = "product-info.html"
+}
+
 function showCategoriesList() {
 
     let htmlContentToAppend = "";
@@ -68,7 +73,7 @@ function showCategoriesList() {
             ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))) {
 
             htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action cursor-active" id="${product.id}">
+            <div onclick="setProdID(${product.id})" class="list-group-item list-group-item-action cursor-active" id="${product.id}">
                 <div class="row">
                     <div class="col-3">
                         <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
@@ -160,6 +165,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
         showCategoriesList();
     });
 
+
+
     document.getElementById("userInputFilter").addEventListener("input", (e) => {
         const string = e.target.value
         console.log(string)
@@ -173,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         for (let i = 0; i < filteredArray.length; i++) {
             let product = filteredArray[i];
             htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action cursor-active">
+            <div onclick="setProdID(${product.id})" class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
                     <div class="col-3">
                         <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
@@ -192,25 +199,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     })
 
-
-
-
-// llamado a la id de los products
-
- // Obtener todos los elementos con la clase "list-group-item"
- const cardElements = document.querySelectorAll("#prod-list-container");
-function coso() {
-    console.log(cardElements)
-}
-coso()
- // Agregar un event listener a cada tarjeta
- cardElements.forEach(card => {
-     card.addEventListener("click", function() {
-         // Código que se ejecutará cuando se haga clic en una tarjeta
-         console.log("Tarjeta clickeada:", card.id);
-         // Puedes realizar acciones específicas para cada tarjeta aquí
-     });
- });
 
 });
 

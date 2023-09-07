@@ -1,7 +1,9 @@
 const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
 const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
+
 const CAT_ID = localStorage.getItem("catID")
 const PRODUCTS_URL = `https://japceibal.github.io/emercado-api/cats_products/${CAT_ID}.json`;
+
 const PROD_ID = localStorage.getItem("prodID")
 const PRODUCT_INFO_URL = `https://japceibal.github.io/emercado-api/products/${PROD_ID}`;
 const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/products_comments/";

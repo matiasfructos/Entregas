@@ -57,12 +57,13 @@ function sortCategories(criteria, array) {
 
     return result;
 }
-
+//Guarda el id del producto
 function setProdID(id) {
     localStorage.setItem("prodID", id);
     window.location = "product-info.html"
 }
 
+//Carta que muestra los productos
 function showCategoriesList() {
 
     let htmlContentToAppend = "";

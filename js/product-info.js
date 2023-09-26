@@ -81,7 +81,25 @@ function producto(data){
 `
  };
 
-      
+//Guarda el id del producto
+function setProdID(id) {
+    localStorage.setItem("prodID", id);
+    window.location = "product-info.html"
+}
+
+ //Función que agrega productos relacionados en la información del productoa
+ let productosRelacionados = document.getElementById("productosRelacionados")    
+ 
+ function productoRelacionado(data){
+  for (let i=0; i < data.length; i++)
+       productosRelacionados.innerHTML +=
+        `<div onclick="setProdID(${data[i].id})" class="card" style="width: 18rem;">
+  <img src="${data[i].image}" class="card-img-top" alt="..">
+  <div class="card-body">
+    <p class="card-text">${data[i].name}</p>
+  </div>
+</div>`
+    }
 
 
 //Comentario y calificacion de productos
@@ -93,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
       if (resultObj.status === "ok") {
           console.log(resultObj.data)
           producto(resultObj.data)
+          productoRelacionado(resultObj.data.relatedProducts)
   }})
 
 //Fetch para los comentarios
@@ -101,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         console.log(resultObj.data)
         comentarios(resultObj.data)
 }})
-  
 });
 
 //Contenedor de comentarios

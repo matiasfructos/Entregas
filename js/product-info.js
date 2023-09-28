@@ -120,6 +120,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
         console.log(resultObj.data)
         comentarios(resultObj.data)
 }})
+temaActivo()
+
 });
 
 //Contenedor de comentarios
@@ -178,4 +180,31 @@ function mostrarEstrellas(puntaje) {
   }
 //El (join) hace que los (elementos) del array se unan
   return estrellas.join("")
+}
+
+// Cambio de Temas
+const temaOscuro = () => {
+  document.querySelector("body").setAttribute("data-bs-theme", "dark")
+  document.querySelector("#dl-icon").setAttribute("class", "bi bi-sun-fill")
+  localStorage.setItem("tema", "oscuro")
+}
+
+const temaClaro = () => {
+  document.querySelector("body").setAttribute("data-bs-theme", "light")
+  document.querySelector("#dl-icon").setAttribute("class", "bi bi-moon-fill")
+  localStorage.removeItem("tema")
+}
+
+const temaActivo = () => {
+  let tema = localStorage.getItem("tema");
+  if (tema == "oscuro") {
+      return temaOscuro()
+  } else {
+      return temaClaro()
+  }
+}
+
+const cambiarTema = () => {
+  document.querySelector("body").getAttribute("data-bs-theme") === "light" ?
+  temaOscuro() : temaClaro();
 }

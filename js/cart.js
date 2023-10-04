@@ -19,7 +19,7 @@ const cerrar_sesion = document.getElementById("cerrar_sesion")
 cerrar_sesion.addEventListener("click", a => {
   localStorage.removeItem("userStatus")
   window.location.href = "login.html"
-}) 
+})
 
 // Cambio de Temas
 const temaOscuro = () => {
@@ -37,63 +37,47 @@ const temaClaro = () => {
 const temaActivo = () => {
   let tema = localStorage.getItem("tema");
   if (tema == "oscuro") {
-      return temaOscuro()
+    return temaOscuro()
   } else {
-      return temaClaro()
+    return temaClaro()
   }
 }
 
 const cambiarTema = () => {
   document.querySelector("body").getAttribute("data-bs-theme") === "light" ?
-  temaOscuro() : temaClaro();
+    temaOscuro() : temaClaro();
 }
 
-document.addEventListener("DOMContentLoaded", function (){
+document.addEventListener("DOMContentLoaded", function () {
 
   //Fetch para la información del carrito de compras
   getJSONData(CART_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
-      
-      if (!localStorage.getItem("cart_products")) {
-        localStorage.setItem("cart_products", JSON.stringify(resultObj.data.articles[0]))
+      let lista_productos = JSON.parse(localStorage.getItem("cart_products")) || []
+      console.log(lista_productos)
+      if (lista_productos.find(element => element.id == resultObj.data.articles[0].id) == undefined) {
+        lista_productos.push(resultObj.data.articles[0])
+        localStorage.setItem("cart_products", JSON.stringify(lista_productos))
       }
     }
   })
-  let productos = localStorage.getItem("cart_products")
-  carrito(JSON.parse(productos))
+  carrito(JSON.parse(localStorage.getItem("cart_products")) || [])
   temaActivo()
 });
-
-//
-function carritoData(data){
-  const cartItems = document.getElementById("cartItems")
-  let subtotal = data.count * data.unitCost
-  cartItems.innerHTML+= 
-    `<tr scope="row">
-    <td><img width="150" src=${data.image} alt="Producto"> </td>
-    <td>${data.name}</td>
-    <td>${data.currency} ${data.unitCost}</td>
-    <td><input type="number" class="form-control" value="${data.count}"</td>
-    <td>${data.currency} ${subtotal}</td>
-    <td><button class="btn btn-danger">Eliminar</button></td>
-    </tr>
-    `
-  ;
-}
 
 function carrito(array) {
   const cartItems = document.getElementById("cartItems")
   array.forEach(element => {
-    cartItems.innerHTML+= 
-    `<tr scope="row">
+    cartItems.innerHTML +=
+      `<tr scope="row">
     <td><img width="150" src=${element.image} alt="Producto"> </td>
     <td>${element.name}</td>
     <td>${element.currency} ${element.unitCost}</td>
     <td><input id="${element.name}" type="number" class="form-control" value="${element.count}"</td>
-    <td>${element.currency} ${subtotal}</td>
+    <td>${element.currency}</td>
     <td><button class="btn btn-danger">Eliminar</button></td>
     </tr>
     `
-  ;
+      ;
   });
 }

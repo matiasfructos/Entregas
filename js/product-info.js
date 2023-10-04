@@ -29,7 +29,7 @@ cerrar_sesion.addEventListener("click", a => {
 let cardsContainer = document.getElementById("cardsContainer");
 
 function producto(data) {
-  cardsContainer.innerHTML = `
+  cardsContainer.innerHTML += `
 <div class="container px-4 px-lg-5 my-5">
 <div class="row gx-4 gx-lg-5 align-items-center">
 <div class="col-md-6">
@@ -72,12 +72,17 @@ function producto(data) {
 </div>
 <h4>Descripción:</h4><br>
 <p class="lead">${data.description}</p>
-<button type="button" id="buy_btn" class="btn btn-success">Comprar</button>
+<div class="d-flex">
+</div>
 </div>
 </div>
 </div>
 `
 };
+
+function buy() {
+  document.getElementById("buy_input").value++
+}
 
 //Guarda el id del producto
 function setProdID(id) {
@@ -106,8 +111,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
   //Fetch para la información del producto
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
-      console.log(resultObj.data)
       producto(resultObj.data)
+      currentProd(resultObj.data)
       productoRelacionado(resultObj.data.relatedProducts)
     }
   })
@@ -115,13 +120,42 @@ document.addEventListener("DOMContentLoaded", function (e) {
   //Fetch para los comentarios
   getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
-      console.log(resultObj.data)
       comentarios(resultObj.data)
     }
   })
   temaActivo()
-
 });
+
+let input22 = document.getElementById("buy_input")
+input22.addEventListener("input", buy2)
+
+function buy2() {
+  console.log("hol2a")
+  let prodID = localStorage.getItem("prodID")
+  let prodArray = JSON.parse(localStorage.getItem("cart_products")) || []
+  console.log(prodArray)
+  let currentProd = prodArray.find(element => element.id == prodID)
+  console.log(currentProd)
+}
+
+function currentProd(product) {
+  let producto = {
+    "user": 25801,
+    "articles": [
+      {
+        "id": product.id,
+        "name": product.name,
+        "count": 1,
+        "unitCost": product.cost,
+        "currency": product.currency,
+        "image": product.images[0]
+      }
+    ]
+  }
+  let prodArray = JSON.parse(localStorage.getItem("cart_products")) || []
+  prodArray.push(product)
+  localStorage.setItem("cart_products", JSON.stringify(prodArray))
+}
 
 //Contenedor de comentarios
 function comentarios(data) {

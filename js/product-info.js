@@ -72,6 +72,7 @@ function producto(data) {
 </div>
 <h4>Descripción:</h4><br>
 <p class="lead">${data.description}</p>
+<button type="button" id="buy_btn" class="btn btn-success">Comprar</button>
 </div>
 </div>
 </div>

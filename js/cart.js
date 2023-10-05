@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
   temaActivo();
 });
 
+//Carta de elementos del carrito
 function carrito(array) {
   const cartItems = document.getElementById("cartItems");
 

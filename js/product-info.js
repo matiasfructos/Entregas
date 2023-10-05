@@ -1,29 +1,29 @@
 //CONSTANTES
-const BTN = document.getElementById("btn")
-const COMMENTS_CONTAINER = document.getElementById("commentsContainer")
+const BTN = document.getElementById("btn");
+const COMMENTS_CONTAINER = document.getElementById("commentsContainer");
 
 // Validacion de usuario
-const data = localStorage.getItem("userStatus")
+const data = localStorage.getItem("userStatus");
 
 function bienvenidx() {
   if (!data) {
-    window.location.href = "login.html"
+    window.location.href = "login.html";
   }
 }
-bienvenidx()
+bienvenidx();
 
 function user() {
-  document.getElementById("user").innerHTML = localStorage.getItem("username")
+  document.getElementById("user").innerHTML = localStorage.getItem("username");
 }
-user()
+user();
 
 // Cerrar Sesion
-const cerrar_sesion = document.getElementById("cerrar_sesion")
+const cerrar_sesion = document.getElementById("cerrar_sesion");
 
-cerrar_sesion.addEventListener("click", a => {
-  localStorage.removeItem("userStatus")
-  window.location.href = "login.html"
-})
+cerrar_sesion.addEventListener("click", (a) => {
+  localStorage.removeItem("userStatus");
+  window.location.href = "login.html";
+});
 
 //Carta del producto
 let cardsContainer = document.getElementById("cardsContainer");
@@ -63,10 +63,15 @@ function producto(data) {
 <span class="visually-hidden">Next</span>
 </button>
 </div>
-</div>
+</div> 
+
 <div class="col-md-6">
 <div class="small mb-1">${data.category} | ${data.soldCount} vendidos</div>
-<h1 class="display-5 fw-bolder">${data.name}</h1>
+<h1 class="display-5 fw-bolder">${data.name}</h1> 
+<div class="form-group d-flex">
+<input id="buy_input" type="number" value="1" min="1" class="form-control"/>
+<button type="button" onclick="currentProd" class="btn btn-success">Comprar</button>
+</div>
 <div class="fs-5 mb-5">
 <span>${data.currency} ${data.cost}</span>
 </div>
@@ -77,161 +82,153 @@ function producto(data) {
 </div>
 </div>
 </div>
-`
-};
-
-function buy() {
-  document.getElementById("buy_input").value++
+`;
 }
 
 //Guarda el id del producto
 function setProdID(id) {
   localStorage.setItem("prodID", id);
-  window.location = "product-info.html"
+  window.location = "product-info.html";
 }
 
 //Función que agrega productos relacionados en la información del productoa
-let productosRelacionados = document.getElementById("productosRelacionados")
+let productosRelacionados = document.getElementById("productosRelacionados");
 
 function productoRelacionado(data) {
   for (let i = 0; i < data.length; i++)
-    productosRelacionados.innerHTML +=
-      `<div onclick="setProdID(${data[i].id})" class="card" style="width: 18rem; cursor: pointer">
+    productosRelacionados.innerHTML += `<div onclick="setProdID(${data[i].id})" class="card" style="width: 18rem; cursor: pointer">
   <img src="${data[i].image}" class="card-img-top" alt="..">
   <div class="card-body">
     <p class="card-text">${data[i].name}</p>
   </div>
-</div>`
+</div>`;
 }
-
 
 //Comentario y calificacion de productos
 document.addEventListener("DOMContentLoaded", function (e) {
-
   //Fetch para la información del producto
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
-      producto(resultObj.data)
-      currentProd(resultObj.data)
-      productoRelacionado(resultObj.data.relatedProducts)
+      producto(resultObj.data);
+      console.log(typeof resultObj.data)
+      currentProd(resultObj.data);
+      productoRelacionado(resultObj.data.relatedProducts);
     }
-  })
+  });
 
   //Fetch para los comentarios
   getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
-      comentarios(resultObj.data)
+      comentarios(resultObj.data);
     }
-  })
-  temaActivo()
+  });
+  temaActivo();
 });
 
-let input22 = document.getElementById("buy_input")
-input22.addEventListener("input", buy2)
-
-function buy2() {
-  console.log("hol2a")
-  let prodID = localStorage.getItem("prodID")
-  let prodArray = JSON.parse(localStorage.getItem("cart_products")) || []
-  console.log(prodArray)
-  let currentProd = prodArray.find(element => element.id == prodID)
-  console.log(currentProd)
-}
 
 function currentProd(product) {
-  let producto = {
-    "user": 25801,
-    "articles": [
-      {
-        "id": product.id,
-        "name": product.name,
-        "count": 1,
-        "unitCost": product.cost,
-        "currency": product.currency,
-        "image": product.images[0]
-      }
-    ]
+  let prodArray = localStorage.getItem("carrito") || [];
+  const producto = {
+      id: product.id,
+      name: product.name,
+      count: product.count,
+      unitCost: product.cost,
+      currency: product.currency,
+      image: product.images[0],
+    }
+    localStorage.setItem("carrito", JSON.stringify(producto))
   }
-  let prodArray = JSON.parse(localStorage.getItem("cart_products")) || []
-  prodArray.push(product)
-  localStorage.setItem("cart_products", JSON.stringify(prodArray))
+
+  // if (!prodArray.find((element) => element.id == producto.id)) {
+  //   prodArray.push(producto);
+  //   localStorage.setItem("carrito", JSON.stringify(prodArray));
+  // } else {
+  //   for (let i = 0; i < prodArray.length; i++) {
+  //     if (prodArray[i].id == producto.id) {
+  //       prodArray[i].count++
+  //     }
+  //   }
+  //   localStorage.setItem("carrito", JSON.stringify(prodArray));
+
+function setProdInfo() {
+  let prodID = localStorage.getItem("prodID");
+  
 }
 
 //Contenedor de comentarios
 function comentarios(data) {
-  data.forEach(element => {
-    COMMENTS_CONTAINER.innerHTML +=
-      `<div class="card">
+  data.forEach((element) => {
+    COMMENTS_CONTAINER.innerHTML += `<div class="card">
 <div class="card-body">
   <h5>${element.user} | ${element.dateTime}</h5><br>
   ${element.description}<br><br>
   ${mostrarEstrellas(element.score)}
 </div>
 </div>
-<br>`
+<br>`;
   });
 }
 
-//Esta funcion agrega un comentario de forma manual, agregando también la puntiación.
+//Esta funcion agrega un comentario de forma manual, agregando también la puntuación.
 function addComment() {
   let comment = document.getElementById("comment").value;
   let rating = document.getElementById("rating").value;
   let date = new Date().toLocaleString();
 
   //Plantilla
-  COMMENTS_CONTAINER.innerHTML +=
-    `<div class="card">
+  COMMENTS_CONTAINER.innerHTML += `<div class="card">
 <div class="card-body">
   <h5>${localStorage.getItem("username")} | ${date} </h5><br>
   ${comment}<br><br>
   ${mostrarEstrellas(rating)}
 </div>
 </div>
-<br>`
+<br>`;
   //
-  document.getElementById("comment").value = ""
-  document.getElementById("rating").value = 1
+  document.getElementById("comment").value = "";
+  document.getElementById("rating").value = 1;
 }
 
 //Funcion que genera estrellas
 
 function mostrarEstrellas(puntaje) {
-  let estrellas = []
+  let estrellas = [];
   //El primer  (for) te devuelve x estrellas pintadas
   for (let i = 0; i < puntaje; i++) {
     estrellas.push("<span class='fa fa-star checked'></span>");
   }
   //El segundo (for) te devuelve 5-x sin pintar
-  for (let j = 0; j < (5 - puntaje); j++) {
+  for (let j = 0; j < 5 - puntaje; j++) {
     estrellas.push("<span class='fa fa-star'></span>");
   }
   //El (join) hace que los (elementos) del array se unan
-  return estrellas.join("")
+  return estrellas.join("");
 }
 
 // Cambio de Temas
 const temaOscuro = () => {
-  document.querySelector("body").setAttribute("data-bs-theme", "dark")
-  document.querySelector("#dl-icon").setAttribute("class", "bi bi-sun-fill")
-  localStorage.setItem("tema", "oscuro")
-}
+  document.querySelector("body").setAttribute("data-bs-theme", "dark");
+  document.querySelector("#dl-icon").setAttribute("class", "bi bi-sun-fill");
+  localStorage.setItem("tema", "oscuro");
+};
 
 const temaClaro = () => {
-  document.querySelector("body").setAttribute("data-bs-theme", "light")
-  document.querySelector("#dl-icon").setAttribute("class", "bi bi-moon-fill")
-  localStorage.removeItem("tema")
-}
+  document.querySelector("body").setAttribute("data-bs-theme", "light");
+  document.querySelector("#dl-icon").setAttribute("class", "bi bi-moon-fill");
+  localStorage.removeItem("tema");
+};
 
 const temaActivo = () => {
   let tema = localStorage.getItem("tema");
   if (tema == "oscuro") {
-    return temaOscuro()
+    return temaOscuro();
   } else {
-    return temaClaro()
+    return temaClaro();
   }
-}
+};
 
 const cambiarTema = () => {
-  document.querySelector("body").getAttribute("data-bs-theme") === "light" ?
-    temaOscuro() : temaClaro();
-}
+  document.querySelector("body").getAttribute("data-bs-theme") === "light"
+    ? temaOscuro()
+    : temaClaro();
+};

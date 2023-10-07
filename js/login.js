@@ -1,25 +1,18 @@
-document.addEventListener("DOMContentLoaded", function () {
-  temaActivo();
-  const loginForm = document.getElementById("loginForm");
+document.getElementById("logInButton").addEventListener("click", () => {
+  const username = document.getElementById("email").value;
+  const password = document.getElementById("pass").value;
 
-  loginForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+  // Validación del usuario
+  if (!username || !password) {
+    return alert("Por favor, rellene todos los campos");
+  } else {
+    localStorage.setItem("userStatus", true);
+  }
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+  // Almacenar el nombre en localStorage para usarlo en home.js
+  localStorage.setItem("username", username);
+  localStorage.setItem("password", password);
 
-    // Validación del usuario
-    if (!username || !password) {
-      return alert("Por favor, rellene todos los campos");
-    } else {
-      localStorage.setItem("userStatus", true);
-    }
-
-    // Almacenar el nombre en localStorage para usarlo en home.js
-    localStorage.setItem("username", username);
-    localStorage.setItem("password", password);
-
-    // Redirigir a la página principal
-    window.location.href = "index.html";
-  });
+  // Redirigir a la página principal
+  window.location.href = "index.html";
 });

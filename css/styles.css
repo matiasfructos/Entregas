@@ -2,7 +2,7 @@
 .card-body,
 .container,
 .site-header {
-  font-family: 'Verdana', serif !important;
+  font-family: "Verdana", serif !important;
 }
 
 .jumbotron .display-4 {
@@ -32,8 +32,8 @@ nav a {
   height: 50vh;
   padding: 5em inherit;
   margin-bottom: 0;
-  background-color: #53C0FB;
-  background: url('../img/cover_back.png');
+  background-color: #53c0fb;
+  background: url("../img/cover_back.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -73,12 +73,12 @@ footer {
 }
 
 footer p {
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 
 .site-header a {
   color: white;
-  transition: ease-in-out color .15s;
+  transition: ease-in-out color 0.15s;
 }
 
 .site-header .dropdown-menu a {
@@ -86,7 +86,7 @@ footer p {
 }
 
 .dropzone {
-  border: 2px dashed #0087F7;
+  border: 2px dashed #0087f7;
   border-radius: 5px;
   background: white;
 }
@@ -190,12 +190,12 @@ a.custom-card:hover {
 }
 
 #contenedor {
-  text-align:center;
+  text-align: center;
 }
 
 .tarjeta {
   width: 1000px;
-  display:flex;
+  display: flex;
   padding: 10px;
   border: 1px solid gray;
   gap: 10px;
@@ -205,7 +205,7 @@ a.custom-card:hover {
 }
 
 .tarjeta-title {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   width: 770px;
 }
@@ -239,7 +239,7 @@ input {
   width: 100%;
 }
 
-#login{
+#login {
   margin: 0;
   height: 40px;
   margin-bottom: 100px;
@@ -247,12 +247,13 @@ input {
   text-align: center;
 }
 
-#username, #password{
+#username,
+#password {
   margin: 10px;
   border: none;
   border-bottom: 1px solid black;
-  }
+}
 
-  .btn{
-    margin: 10px;
-  }
+.btn {
+  margin: 10px;
+}

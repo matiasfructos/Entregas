@@ -2,25 +2,8 @@
 const BTN = document.getElementById("btn");
 const COMMENTS_CONTAINER = document.getElementById("commentsContainer");
 
-// Validacion de usuario
-const data = localStorage.getItem("userStatus");
-
-function bienvenidx() {
-  if (!data) {
-    window.location.href = "login.html";
-  }
-}
-bienvenidx();
-
-function user() {
-  document.getElementById("user").innerHTML = localStorage.getItem("username");
-}
-user();
-
-// Cerrar Sesion
-const cerrar_sesion = document.getElementById("cerrar_sesion");
-
-cerrar_sesion.addEventListener("click", (a) => {
+// Bloque encargado del cierre de sesión
+document.getElementById("cerrar_sesion").addEventListener("click", (a) => {
   localStorage.removeItem("userStatus");
   window.location.href = "login.html";
 });
@@ -104,13 +87,15 @@ function productoRelacionado(data) {
 </div>`;
 }
 
-//Comentario y calificacion de productos
 document.addEventListener("DOMContentLoaded", function (e) {
-  //Fetch para la información del producto
+  getUserStatus();
+  showUser();
+  temaActivo();
+
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
       producto(resultObj.data);
-      console.log(typeof resultObj.data)
+      console.log(typeof resultObj.data);
       currentProd(resultObj.data);
       productoRelacionado(resultObj.data.relatedProducts);
     }
@@ -121,38 +106,20 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (resultObj.status === "ok") {
       comentarios(resultObj.data);
     }
-  });
-  temaActivo();
+  })
 });
-
 
 function currentProd(product) {
   let prodArray = localStorage.getItem("carrito") || [];
   const producto = {
-      id: product.id,
-      name: product.name,
-      count: product.count,
-      unitCost: product.cost,
-      currency: product.currency,
-      image: product.images[0],
-    }
-    localStorage.setItem("carrito", JSON.stringify(producto))
-  }
-
-  // if (!prodArray.find((element) => element.id == producto.id)) {
-  //   prodArray.push(producto);
-  //   localStorage.setItem("carrito", JSON.stringify(prodArray));
-  // } else {
-  //   for (let i = 0; i < prodArray.length; i++) {
-  //     if (prodArray[i].id == producto.id) {
-  //       prodArray[i].count++
-  //     }
-  //   }
-  //   localStorage.setItem("carrito", JSON.stringify(prodArray));
-
-function setProdInfo() {
-  let prodID = localStorage.getItem("prodID");
-  
+    id: product.id,
+    name: product.name,
+    count: product.count,
+    unitCost: product.cost,
+    currency: product.currency,
+    image: product.images[0],
+  };
+  localStorage.setItem("carrito", JSON.stringify(producto));
 }
 
 //Contenedor de comentarios
@@ -204,31 +171,3 @@ function mostrarEstrellas(puntaje) {
   //El (join) hace que los (elementos) del array se unan
   return estrellas.join("");
 }
-
-// Cambio de Temas
-const temaOscuro = () => {
-  document.querySelector("body").setAttribute("data-bs-theme", "dark");
-  document.querySelector("#dl-icon").setAttribute("class", "bi bi-sun-fill");
-  localStorage.setItem("tema", "oscuro");
-};
-
-const temaClaro = () => {
-  document.querySelector("body").setAttribute("data-bs-theme", "light");
-  document.querySelector("#dl-icon").setAttribute("class", "bi bi-moon-fill");
-  localStorage.removeItem("tema");
-};
-
-const temaActivo = () => {
-  let tema = localStorage.getItem("tema");
-  if (tema == "oscuro") {
-    return temaOscuro();
-  } else {
-    return temaClaro();
-  }
-};
-
-const cambiarTema = () => {
-  document.querySelector("body").getAttribute("data-bs-theme") === "light"
-    ? temaOscuro()
-    : temaClaro();
-};

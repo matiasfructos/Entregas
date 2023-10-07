@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-
+  temaActivo();
   const loginForm = document.getElementById("loginForm");
 
   loginForm.addEventListener("submit", function (event) {
@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validación del usuario
     if (!username || !password) {
-      return alert("Por favor, rellene todos los campos")
+      return alert("Por favor, rellene todos los campos");
     } else {
-      localStorage.setItem("userStatus", true)
+      localStorage.setItem("userStatus", true);
     }
 
     // Almacenar el nombre en localStorage para usarlo en home.js
@@ -23,31 +23,3 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "index.html";
   });
 });
-
-
-// Cambio de Temas
-const temaOscuro = () => {
-  document.querySelector("body").setAttribute("data-bs-theme", "dark")
-  document.querySelector("#dl-icon").setAttribute("class", "bi bi-sun-fill")
-  localStorage.setItem("tema", "oscuro")
-}
-
-const temaClaro = () => {
-  document.querySelector("body").setAttribute("data-bs-theme", "light")
-  document.querySelector("#dl-icon").setAttribute("class", "bi bi-moon-fill")
-  localStorage.removeItem("tema")
-}
-
-const temaActivo = () => {
-  let tema = localStorage.getItem("tema");
-  if (tema == "oscuro") {
-      return temaOscuro()
-  } else {
-      return temaClaro()
-  }
-}
-
-const cambiarTema = () => {
-  document.querySelector("body").getAttribute("data-bs-theme") === "light" ?
-  temaOscuro() : temaClaro();
-}

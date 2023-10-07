@@ -33,7 +33,7 @@
             />
             <label for="fullName">Full Name</label>
           </div>
-          <div class="form-floating mb-4">
+          <div class="form-floating pb-4">
             <input
               type="email"
               class="form-control"
@@ -41,6 +41,9 @@
               placeholder="Email"
             />
             <label for="email">Email</label>
+            <div class="invalid-feedback text-start">
+              Please provide a unique and valid email.
+            </div>
           </div>
           <div class="form-floating mb-4">
             <input
@@ -50,6 +53,9 @@
               placeholder="Password"
             />
             <label for="pass">Password</label>
+            <div class="invalid-feedback text-start">
+              Please provide a valid password.
+            </div>
           </div>
           <button
             type="button"
@@ -73,5 +79,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="js/init.js"></script>
+    <script src="js/signup.js"></script>
   </body>
 </html>

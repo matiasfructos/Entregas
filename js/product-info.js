@@ -5,6 +5,7 @@ const COMMENTS_CONTAINER = document.getElementById("commentsContainer");
 // Bloque encargado del cierre de sesión
 document.getElementById("cerrar_sesion").addEventListener("click", (a) => {
   localStorage.removeItem("userStatus");
+  localStorage.removeItem("currentUser");
   window.location.href = "login.html";
 });
 
@@ -95,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
       producto(resultObj.data);
-      console.log(typeof resultObj.data);
       currentProd(resultObj.data);
       productoRelacionado(resultObj.data.relatedProducts);
     }
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (resultObj.status === "ok") {
       comentarios(resultObj.data);
     }
-  })
+  });
 });
 
 function currentProd(product) {
@@ -141,11 +141,12 @@ function addComment() {
   let comment = document.getElementById("comment").value;
   let rating = document.getElementById("rating").value;
   let date = new Date().toLocaleString();
+  let email = JSON.parse(localStorage.getItem("currentUser"))[0].email;
 
   //Plantilla
   COMMENTS_CONTAINER.innerHTML += `<div class="card">
 <div class="card-body">
-  <h5>${localStorage.getItem("username")} | ${date} </h5><br>
+  <h5>${email} | ${date} </h5><br>
   ${comment}<br><br>
   ${mostrarEstrellas(rating)}
 </div>

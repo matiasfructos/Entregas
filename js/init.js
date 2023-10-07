@@ -57,7 +57,10 @@ function getUserStatus() {
 
 // Muestra el nombre de usuario en el navbar
 function showUser() {
-  document.getElementById("user").innerHTML = localStorage.getItem("username");
+  let fullName = JSON.parse(localStorage.getItem("currentUser"))[0].fullName
+  let lookFirstName = /\b\w+\b/;
+  let firstName = fullName.match(lookFirstName)[0];
+  document.getElementById("user").innerHTML = "Hola, " + firstName;
 }
 
 // Funciones encargadas de los temas claro-oscuro

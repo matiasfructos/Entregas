@@ -100,7 +100,7 @@ function producto(data) {
               min="1"
               class="form-control"
             />
-            <button type="button" onclick="currentProd" class="btn btn-success">
+            <button type="button" onclick="currentProd()" class="btn btn-success">
               Comprar
             </button>
           </div>
@@ -115,7 +115,6 @@ function producto(data) {
       </div>
     </div>
   `;
-
 }
 
 //Guarda el id del producto
@@ -151,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
       producto(resultObj.data);
-      currentProd(resultObj.data);
       productoRelacionado(resultObj.data.relatedProducts);
     }
   });
@@ -164,17 +162,21 @@ document.addEventListener("DOMContentLoaded", function (e) {
   });
 });
 
-function currentProd(product) {
-  let prodArray = localStorage.getItem("carrito") || [];
-  const producto = {
-    id: product.id,
-    name: product.name,
-    count: product.count,
-    unitCost: product.cost,
-    currency: product.currency,
-    image: product.images[0],
-  };
-  localStorage.setItem("carrito", JSON.stringify(producto));
+function currentProd() {
+  let prodArray = JSON.parse(localStorage.getItem("carrito")) || [];
+  getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
+    const producto = {
+      id: resultObj.data.id,
+      name: resultObj.data.name,
+      count: document.getElementById("buy_input").value,
+      unitCost: resultObj.data.cost,
+      currency: resultObj.data.currency,
+      image: resultObj.data.images[0],
+    };
+    console.log(typeof prodArray);
+    prodArray.push(producto);
+    localStorage.setItem("carrito", JSON.stringify(prodArray));
+  });
 }
 
 //Contenedor de comentarios

@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   //Fetch para la información del carrito de compras
   getJSONData(CART_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
-      carrito(resultObj.data.articles);
+      let productos = JSON.parse(localStorage.getItem("carrito")) || [];
+      productos.push(resultObj.data.articles[0]);
+      carrito(productos);
     }
   });
 });
@@ -23,8 +25,8 @@ function carrito(array) {
   const cartItems = document.getElementById("cartItems");
 
   array.forEach((element) => {
-    const inputId = `input_${element.name}`; // Crea ID para el input
-    const subtotalId = `subtotal_${element.name}`; // Crea ID para los elementos del subtotal
+    const inputId = `input_${element.id}`; // Crea ID para el input
+    const subtotalId = `subtotal_${element.id}`; // Crea ID para los elementos del subtotal
 
     // Crea la fila de la tabla
     cartItems.innerHTML += `
@@ -47,6 +49,7 @@ function carrito(array) {
 
     inputElement.addEventListener("input", () => {
       const cantidad = parseInt(inputElement.value);
+      console.log(inputElement.value)
       const nuevoSubtotal = cantidad * element.unitCost;
       subtotalElement.textContent = nuevoSubtotal;
     });

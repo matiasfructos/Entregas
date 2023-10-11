@@ -51,10 +51,10 @@ function producto(data) {
 
 <div class="col-md-6">
 <div class="small mb-1">${data.category} | ${data.soldCount} vendidos</div>
-<h1 class="display-5 fw-bolder">${data.name}</h1> 
-<div class="form-group d-flex">
-<input id="buy_input" type="number" value="1" min="1" class="form-control"/>
-<button type="button" onclick="currentProd" class="btn btn-success">Comprar</button>
+<h1 class="display-5 fw-bolder">${data.name}</h1> <br>
+<div class="form-group mb-3 w-50 d-flex">
+<input id="buy_input" onchange="count(this.value)" type="number" value="0" min="0" class="form-control"/>
+<button type="button" onclick="currentProd(productInfo); toastSpan();" class="btn btn-success" id="liveToastBtn">Comprar</button>
 </div>
 <div class="fs-5 mb-5">
 <span>${data.currency} ${data.cost}</span>
@@ -66,8 +66,45 @@ function producto(data) {
 </div>
 </div>
 </div>
+
 `;
 }
+
+
+//Toast para confirmar que se agreg[o el prodcuto]
+function toast() {
+  let toast = document.getElementById("liveToast")
+  console.log("hola")
+  // Use Bootstrap's toast methods to show the toast
+  var liveToast = new bootstrap.Toast(toast);
+  liveToast.show();
+};
+                       
+//COUNT FUNCTION
+let COUNT = 1
+function count (valor){
+
+  COUNT = valor
+console.log(COUNT)
+}
+
+//Función que guarda la info del producto
+let productInfo;
+
+function info (data){
+  productInfo = data
+  console.log(productInfo)
+}
+
+//Se cambia el nombre del toast para cuando se agrega un producto al carrito
+
+let toastName = document.getElementById("toastName")
+
+function toastSpan () {
+  toastName.innerHTML = productInfo.name
+}
+
+
 
 //Guarda el id del producto
 function setProdID(id) {
@@ -95,8 +132,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
+      info(resultObj.data);
       producto(resultObj.data);
-      currentProd(resultObj.data);
       productoRelacionado(resultObj.data.relatedProducts);
     }
   });
@@ -109,18 +146,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
   });
 });
 
-function currentProd(product) {
-  let prodArray = localStorage.getItem("carrito") || [];
-  const producto = {
-    id: product.id,
-    name: product.name,
-    count: product.count,
-    unitCost: product.cost,
-    currency: product.currency,
-    image: product.images[0],
-  };
-  localStorage.setItem("carrito", JSON.stringify(producto));
-}
 
 //Contenedor de comentarios
 function comentarios(data) {
@@ -171,4 +196,35 @@ function mostrarEstrellas(puntaje) {
   }
   //El (join) hace que los (elementos) del array se unan
   return estrellas.join("");
+}
+
+
+
+//Función que guarda un elemento en el carrito
+function currentProd(product) {
+  let prodArray = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  const existingpProduct = prodArray.find((item) => item.id === product.id);
+
+  if (existingpProduct) {
+
+    existingpProduct.count = COUNT;
+
+  } else{
+ 
+  const producto = {
+    id: product.id,
+    name: product.name,
+    count: COUNT,
+    unitCost: product.cost,
+    currency: product.currency,
+    image: product.images[0],
+  };
+  prodArray.push(producto);
+  }
+
+  console.log(prodArray)
+  localStorage.setItem("carrito", JSON.stringify(prodArray));
+  toast()
+  document.getElementById("buy_input").value = 0;
 }

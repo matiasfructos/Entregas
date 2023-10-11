@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
   getJSONData(CART_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
       let productos = JSON.parse(localStorage.getItem("carrito")) || [];
-      console.log(productos);
       productos.push(resultObj.data.articles[0]);
       carrito(productos);
     }
@@ -25,7 +24,9 @@ document.getElementById("cerrar_sesion").addEventListener("click", (a) => {
 function carrito(array) {
   const cartItems = document.getElementById("cartItems");
   array.forEach((element) => {
-    // // Crea la fila de la tabla
+
+    // Crea la fila de la tabla
+    
     cartItems.innerHTML += `
       <tr scope="row">
         <td><img width="150" src=${element.image} alt="Producto"> </td>
@@ -47,6 +48,7 @@ function carrito(array) {
           span[0].textContent = resultObj.data.cost * e.target.value;
         }
       });
+
     });
   });
 }

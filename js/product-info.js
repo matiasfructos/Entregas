@@ -142,7 +142,7 @@ function info (data){
   productInfo = data
   console.log(productInfo)
 }
-
+//
 //Se cambia el nombre del toast para cuando se agrega un producto al carrito
 
 let toastName = document.getElementById("toastName")

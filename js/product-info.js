@@ -124,10 +124,9 @@ function producto(data) {
 `;
 }
 
-//Toast para confirmar que se agreg[o el prodcuto]
+//Toast para confirmar que se agregó el prodcuto
 function toast() {
   let toast = document.getElementById("liveToast");
-  // Use Bootstrap's toast methods to show the toast
   var liveToast = new bootstrap.Toast(toast);
   liveToast.show();
 }
@@ -144,7 +143,8 @@ let productInfo;
 function info(data) {
   productInfo = data;
 }
-//
+
+
 //Se cambia el nombre del toast para cuando se agrega un producto al carrito
 
 let toastName = document.getElementById("toastName");
@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
   showUser();
   temaActivo();
 
+  //Fetch que utiliza la información del producto
   getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
     if (resultObj.status === "ok") {
       info(resultObj.data);
@@ -257,9 +258,10 @@ function mostrarEstrellas(puntaje) {
 function currentProd(product) {
   let prodArray = JSON.parse(localStorage.getItem("carrito")) || [];
   const existingpProduct = prodArray.find((item) => item.id === product.id);
-
+//Si el producto ya existe solo altera el count
   if (existingpProduct) {
     existingpProduct.count = COUNT;
+//Si el producto no
   } else {
     const producto = {
       id: product.id,

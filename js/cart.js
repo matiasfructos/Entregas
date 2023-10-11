@@ -24,8 +24,9 @@ document.getElementById("cerrar_sesion").addEventListener("click", (a) => {
 function carrito(array) {
   const cartItems = document.getElementById("cartItems");
   array.forEach((element) => {
-    // Crea la fila de la tabla
-
+    
+    
+// Crea la fila de la tabla
     cartItems.innerHTML += `
       <tr scope="row">
         <td><img width="150" src=${element.image} alt="Producto"> </td>
@@ -42,6 +43,8 @@ function carrito(array) {
         <td><button class="btn btn-danger">Eliminar</button></td>
       </tr>`;
   });
+
+  //Actualización del subtotal en tiempo real
   let productos = document.querySelectorAll(".count");
   productos.forEach((elemento) => {
     elemento.addEventListener("input", (e) => {

@@ -14,99 +14,144 @@ let cardsContainer = document.getElementById("cardsContainer");
 
 function producto(data) {
   cardsContainer.innerHTML += `
-<div class="container px-4 px-lg-5 my-5">
-<div class="row gx-4 gx-lg-5 align-items-center">
-<div class="col-md-6">
-<div id="prodCarousel" class="carousel slide carousel-fade">
-<div class="carousel-indicators">
-  <button type="button" data-bs-target="#prodCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-  <button type="button" data-bs-target="#prodCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-  <button type="button" data-bs-target="#prodCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  <button type="button" data-bs-target="#prodCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-</div>
-<div class="carousel-inner">
-  <div class="carousel-item active">
-    <img src="${data.images[0]}" class="d-block w-100" alt="...">
-  </div>
-  <div class="carousel-item">
-    <img src="${data.images[1]}" class="d-block w-100" alt="...">
-  </div>
-  <div class="carousel-item">
-    <img src="${data.images[2]}" class="d-block w-100" alt="...">
-  </div>
-  <div class="carousel-item">
-    <img src="${data.images[3]}" class="d-block w-100" alt="...">
-  </div>
-</div>
-<button class="carousel-control-prev" type="button" data-bs-target="#prodCarousel" data-bs-slide="prev">
-<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-<span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#prodCarousel" data-bs-slide="next">
-<span class="carousel-control-next-icon" aria-hidden="true"></span>
-<span class="visually-hidden">Next</span>
-</button>
-</div>
-</div> 
+  <div class="container px-4 px-lg-5 my-5">
+  <div class="row gx-4 gx-lg-5 align-items-center">
+    <div class="col-md-6">
+      <div id="prodCarousel" class="carousel slide carousel-fade">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#prodCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#prodCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#prodCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#prodCarousel"
+            data-bs-slide-to="3"
+            aria-label="Slide 4"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="${data.images[0]}" class="d-block w-100" alt="..." />
+          </div>
+          <div class="carousel-item">
+            <img src="${data.images[1]}" class="d-block w-100" alt="..." />
+          </div>
+          <div class="carousel-item">
+            <img src="${data.images[2]}" class="d-block w-100" alt="..." />
+          </div>
+          <div class="carousel-item">
+            <img src="${data.images[3]}" class="d-block w-100" alt="..." />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#prodCarousel"
+          data-bs-slide="prev"
+        >
+          <span
+            class="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#prodCarousel"
+          data-bs-slide="next"
+        >
+          <span
+            class="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
 
-<div class="col-md-6">
-<div class="small mb-1">${data.category} | ${data.soldCount} vendidos</div>
-<h1 class="display-5 fw-bolder">${data.name}</h1> <br>
-<div class="form-group mb-3 w-50 d-flex">
-<input id="buy_input" onchange="count(this.value)" type="number" value="0" min="0" class="form-control"/>
-<button type="button" onclick="currentProd(productInfo); toastSpan();" class="btn btn-success" id="liveToastBtn">Comprar</button>
+    <div class="col-md-6">
+      <div class="small mb-1">
+        ${data.category} | ${data.soldCount} vendidos
+      </div>
+      <h1 class="display-5 fw-bolder">${data.name}</h1>
+      <br />
+      <div class="form-group mb-3 w-50 d-flex">
+        <input
+          id="buy_input"
+          onchange="count(this.value)"
+          type="number"
+          value="0"
+          min="0"
+          class="form-control"
+        />
+        <button
+          type="button"
+          onclick="currentProd(productInfo); toastSpan();"
+          class="btn btn-success"
+          id="liveToastBtn"
+        >
+          Comprar
+        </button>
+      </div>
+      <div class="fs-5 mb-5">
+        <span>${data.currency} ${data.cost}</span>
+      </div>
+      <h4>Descripción:</h4>
+      <br />
+      <p class="lead">${data.description}</p>
+      <div class="d-flex"></div>
+    </div>
+  </div>
 </div>
-<div class="fs-5 mb-5">
-<span>${data.currency} ${data.cost}</span>
-</div>
-<h4>Descripción:</h4><br>
-<p class="lead">${data.description}</p>
-<div class="d-flex">
-</div>
-</div>
-</div>
-</div>
-
 `;
 }
 
-
-
-
 //Toast para confirmar que se agreg[o el prodcuto]
 function toast() {
-  let toast = document.getElementById("liveToast")
-  console.log("hola")
+  let toast = document.getElementById("liveToast");
   // Use Bootstrap's toast methods to show the toast
   var liveToast = new bootstrap.Toast(toast);
   liveToast.show();
-};
-                       
-//COUNT FUNCTION
-let COUNT = 1
-function count (valor){
+}
 
-  COUNT = valor
-console.log(COUNT)
+//COUNT FUNCTION
+let COUNT = 1;
+function count(valor) {
+  COUNT = valor;
 }
 
 //Función que guarda la info del producto
 let productInfo;
 
-function info (data){
-  productInfo = data
-  console.log(productInfo)
+function info(data) {
+  productInfo = data;
 }
 //
 //Se cambia el nombre del toast para cuando se agrega un producto al carrito
 
-let toastName = document.getElementById("toastName")
+let toastName = document.getElementById("toastName");
 
-function toastSpan () {
-  toastName.innerHTML = productInfo.name
+function toastSpan() {
+  toastName.innerHTML = productInfo.name;
 }
-
-
 
 //Guarda el id del producto
 function setProdID(id) {
@@ -153,25 +198,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
   });
 });
-
-
-function currentProd() {
-  let prodArray = JSON.parse(localStorage.getItem("carrito")) || [];
-  getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
-    const producto = {
-      id: resultObj.data.id,
-      name: resultObj.data.name,
-      count: document.getElementById("buy_input").value,
-      unitCost: resultObj.data.cost,
-      currency: resultObj.data.currency,
-      image: resultObj.data.images[0],
-    };
-    console.log(typeof prodArray);
-    prodArray.push(producto);
-    localStorage.setItem("carrito", JSON.stringify(prodArray));
-  });
-}
-
 
 //Contenedor de comentarios
 function comentarios(data) {
@@ -227,33 +253,26 @@ function mostrarEstrellas(puntaje) {
   return estrellas.join("");
 }
 
-
-
 //Función que guarda un elemento en el carrito
 function currentProd(product) {
   let prodArray = JSON.parse(localStorage.getItem("carrito")) || [];
-
   const existingpProduct = prodArray.find((item) => item.id === product.id);
 
   if (existingpProduct) {
-
     existingpProduct.count = COUNT;
-
-  } else{
- 
-  const producto = {
-    id: product.id,
-    name: product.name,
-    count: COUNT,
-    unitCost: product.cost,
-    currency: product.currency,
-    image: product.images[0],
-  };
-  prodArray.push(producto);
+  } else {
+    const producto = {
+      id: product.id,
+      name: product.name,
+      count: COUNT,
+      unitCost: product.cost,
+      currency: product.currency,
+      image: product.images[0],
+    };
+    prodArray.push(producto);
   }
 
-  console.log(prodArray)
   localStorage.setItem("carrito", JSON.stringify(prodArray));
-  toast()
+  toast();
   document.getElementById("buy_input").value = 0;
 }

@@ -57,7 +57,7 @@ function getUserStatus() {
 
 // Muestra el nombre de usuario en el navbar
 function showUser() {
-  let fullName = JSON.parse(localStorage.getItem("currentUser"))[0].fullName
+  let fullName = JSON.parse(localStorage.getItem("currentUser"))[0].fullName;
   let lookFirstName = /\b\w+\b/;
   let firstName = fullName.match(lookFirstName)[0];
   document.getElementById("user").innerHTML = "Hola, " + firstName;

@@ -140,10 +140,21 @@
       </div>
 
       <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div
+          id="liveToast"
+          class="toast hide"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
           <div class="toast-header">
             <strong class="me-auto">Éxito!</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="toast-body">
             Se agregó correctamente <span id="toastName"></span> al carrito
@@ -181,11 +192,12 @@
     <script src="js/product-info.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script>
-      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+      var popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+      );
       var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-      return new bootstrap.Popover(popoverTriggerEl)
-      })
-      </script>
-      
+        return new bootstrap.Popover(popoverTriggerEl);
+      });
+    </script>
   </body>
 </html>

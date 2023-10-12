@@ -140,24 +140,18 @@
       </div>
 
       <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div
-          id="liveToast"
-          class="toast hide"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
             <strong class="me-auto">Éxito!</strong>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="toast"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
           <div class="toast-body">
-            Se agregó correctamente <span id="toastName"></span> al carrito
+            Se agregó correctamente <span id="toastName"></span> al carrito.
+            <div class="mt-2 pt-2 border-top">
+            <button type="button" class="btn btn-secondary" onclick="window.location.href = 'cart.html'">
+              <i class="bi bi-cart"></i> Ir al carrito.
+            </button>
+          </div>
           </div>
         </div>
       </div>

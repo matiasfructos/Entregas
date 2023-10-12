@@ -105,7 +105,7 @@ function producto(data) {
         <button
           type="button"
           onclick="currentProd(productInfo); toastSpan();"
-          class="btn btn-success"
+          class="btn btn-success comprar"
           id="liveToastBtn"
         >
           Comprar
@@ -257,11 +257,11 @@ function mostrarEstrellas(puntaje) {
 //Función que guarda un elemento en el carrito
 function currentProd(product) {
   let prodArray = JSON.parse(localStorage.getItem("carrito")) || [];
-  const existingpProduct = prodArray.find((item) => item.id === product.id);
+  const existingProduct = prodArray.find((item) => item.id === product.id);
 //Si el producto ya existe solo altera el count
-  if (existingpProduct) {
-    existingpProduct.count = COUNT;
-//Si el producto no
+  if (existingProduct) {
+    existingProduct.count = COUNT;
+//Si el producto no existe
   } else {
     const producto = {
       id: product.id,
@@ -273,8 +273,13 @@ function currentProd(product) {
     };
     prodArray.push(producto);
   }
-
   localStorage.setItem("carrito", JSON.stringify(prodArray));
   toast();
   document.getElementById("buy_input").value = 0;
 }
+
+
+// let comprar = document.querySelector(".comprar")
+
+// comprar.forEach(elemento => {})
+

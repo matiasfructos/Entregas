@@ -105,6 +105,12 @@
                   </tr>
                 </thead>
                 <tbody id="cartItems" class="container w-75"></tbody>
+                <tfoot>
+                  <tr>
+                    <td>Total</td>
+                    <td id="total"></td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -117,10 +123,11 @@
           <input
             class="form-check-input"
             type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
+            name="tipoenvio"
+            id="premium"
+            value="0.15"
           />
-          <label class="form-check-label" for="flexRadioDefault1">
+          <label class="form-check-label" for="premium">
             Premium 2 a 5 dias(15%)
           </label>
         </div>
@@ -128,11 +135,12 @@
           <input
             class="form-check-input"
             type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
+            name="tipoenvio"
+            id="express"
             checked
+            value="0.7"
           />
-          <label class="form-check-label" for="flexRadioDefault2">
+          <label class="form-check-label" for="express">
             Express 5 a 8 dias (7%)
           </label>
         </div>
@@ -140,56 +148,57 @@
           <input
             class="form-check-input"
             type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
+            name="tipoenvio"
+            id="estandar"
+            value="0.5"
           />
-          <label class="form-check-label" for="flexRadioDefault1">
+          <label class="form-check-label" for="estandar">
             Estándar 12 a 15 dias (5%)
           </label>
         </div>
         <br /><br />
         <form class="row g-3 needs-validation" novalidate>
           <div class="col-md-4 form-group">
-            <label for="validationCustom03" class="form-label">Calle</label>
+            <label for="calle" class="form-label">Calle</label>
             <input
               type="text"
               class="form-control"
-              id="validationCustom03"
+              id="calle"
               required
             />
           </div>
           <div class="col-md-4 form-group">
-            <label for="validationCustom03" class="form-label">Número</label>
+            <label for="numero" class="form-label">Número</label>
             <input
               type="number"
               class="form-control"
-              id="validationCustom03"
+              id="numero"
               required
             />
           </div>
           <div class="col-md-4 form-group">
-            <label for="validationCustom03" class="form-label">Esquina</label>
+            <label for="esquina" class="form-label">Esquina</label>
             <input
               type="text"
               class="form-control"
-              id="validationCustom03"
+              id="esquina"
               required
             />
           </div>
           <div class="col-md-4 form-group">
-            <label for="validationCustom03" class="form-label">Ciudad</label>
+            <label for="ciudad" class="form-label">Ciudad</label>
             <input
               type="text"
               class="form-control"
-              id="validationCustom03"
+              id="ciudad"
               required
             />
           </div>
           <div class="col-md-4 form-group">
-            <label for="validationCustom04" class="form-label"
+            <label for="departamento" class="form-label"
               >Departamento</label
             >
-            <select class="form-control" id="validationCustom04" required>
+            <select class="form-control" id="departamento" required>
               <option selected disabled value="">
                 Selecciona el Departamento
               </option>
@@ -215,13 +224,13 @@
             </select>
           </div>
           <div class="col-md-4 form-group">
-            <label for="validationCustom05" class="form-label"
+            <label for="codigo_postal" class="form-label"
               >Código Postal</label
             >
             <input
               type="text"
               class="form-control"
-              id="validationCustom05"
+              id="codigo_postal"
               required
             />
           </div>

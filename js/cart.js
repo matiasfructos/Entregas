@@ -286,6 +286,7 @@ let cardVen = document.getElementById("credit-card-expire-date");
 let cuenta = document.getElementById("bank-account-number");
 let transferencia = document.getElementById("payment-bank-account");
 let spanMetodo = document.getElementById("display-metodo-pago");
+let botonSeleccionar = document.getElementById("btnSeleccionar");
 
 credito.addEventListener("input", () => {
   if (credito.checked == true) {
@@ -308,5 +309,23 @@ transferencia.addEventListener("input", () => {
     cardSec.value = "";
     cardVen.value = "";
     spanMetodo.textContent = "El método seleccionado es: transferencia";
+  }
+});
+
+botonSeleccionar.addEventListener("click", (event) => {
+  if (credito.checked) {
+    if (!cardNum.checkValidity() || !cardSec.checkValidity() || !cardVen.checkValidity()) {
+      cardNum.reportValidity();
+      cardSec.reportValidity();
+      cardVen.reportValidity();
+    } else {
+      botonSeleccionar.setAttribute("data-bs-dismiss", "modal");
+    }
+  } else if (transferencia.checked) {
+    if (!cuenta.checkValidity()) {
+      cuenta.reportValidity();
+    } else {
+      botonSeleccionar.setAttribute("data-bs-dismiss", "modal");
+    }
   }
 });

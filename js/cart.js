@@ -53,6 +53,20 @@ function carrito(array) {
       </tr>`;
     total();
   });
+  
+  //Botón de eliminar
+  let botones = document.querySelectorAll(".botones");
+  botones.forEach((elemento) => {
+    elemento.addEventListener("click", (e) => {
+      let productos = JSON.parse(localStorage.getItem("carrito")) || [];
+      let filtrados = productos.filter(
+        (elemento) => elemento.id != e.target.value
+      );
+      localStorage.setItem("carrito", JSON.stringify(filtrados));
+      e.target.parentElement.parentElement.remove();
+      total();
+    });
+  });
 
   //Actualización del subtotal en tiempo real
   let productos = document.querySelectorAll(".count");
@@ -136,22 +150,9 @@ function carrito(array) {
     }
   });
 
-  //Botón de eliminar
-  let botones = document.querySelectorAll(".botones");
-  botones.forEach((elemento) => {
-    elemento.addEventListener("click", (e) => {
-      let productos = JSON.parse(localStorage.getItem("carrito")) || [];
-      let filtrados = productos.filter(
-        (elemento) => elemento.id != e.target.value
-      );
-      localStorage.setItem("carrito", JSON.stringify(filtrados));
-      e.target.parentElement.parentElement.remove();
-      total();
-    });
-  });
 }
 
-//Proceso de validación 
+//Proceso de validación
 let miFormulario = document.getElementById("formEnvio");
 console.log(miFormulario);
 miFormulario.addEventListener("submit", (e) => {
@@ -182,16 +183,34 @@ miFormulario.addEventListener("submit", (e) => {
     esquina.checkValidity() &&
     ciudad.checkValidity() &&
     departamento.checkValidity() &&
-    (cardNum.checkValidity() &&
-    cardSec.checkValidity() &&
-    cardVen.checkValidity() ||
-    cuenta.checkValidity())
+    codigo_postal.checkValidity() &&
+    ((cardNum.checkValidity() &&
+        cardSec.checkValidity() &&
+        cardVen.checkValidity()) ||
+        (cuenta.checkValidity())
+    ) &&
+    (premium.checkValidity() ||
+      express.checkValidity() ||
+      estandar.checkValidity()) &&
+    (credito.checkValidity() || transferencia.checkValidity())
   ) {
     alert("Formulario enviado con éxito!");
     localStorage.removeItem("carrito");
     document.getElementById("cartItems").innerHTML = "";
   } else {
     e.preventDefault();
+  }
+
+  if (
+    !premium.checkValidity() ||
+    !express.checkValidity() ||
+    estandar.checkValidity()
+  ) {
+    const checkedRadio = document.querySelector('input[type="radio"]:checked');
+    checkedRadio.setAttribute("class", "form-check-input envio is-valid");
+    e.preventDefault();
+  } else {
+    checkedRadio.setAttribute("class", "form-check-input envio is-invalid");
   }
 
   if (!calle.checkValidity()) {
@@ -274,8 +293,6 @@ miFormulario.addEventListener("submit", (e) => {
     e.preventDefault();
     spanMetodo.setAttribute("style", "color:red");
   }
-
-  
 });
 
 //Selección de método de compra

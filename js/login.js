@@ -1,6 +1,7 @@
 document.getElementById("logInButton").addEventListener("click", () => {
   const email = document.getElementById("email").value;
   const pass = document.getElementById("pass").value;
+  localStorage.setItem("email", document.getElementById("email").value)
 
   let users = JSON.parse(localStorage.getItem("usuarios")) || [];
   let isValid = users.find(

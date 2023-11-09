@@ -40,9 +40,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul
+            class="navbar-nav w-100 justify-content-between align-items-center"
+          >
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link active" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="categories.html">Categorías</a>
@@ -105,107 +107,86 @@
                   </tr>
                 </thead>
                 <tbody id="cartItems" class="container w-75"></tbody>
-                
               </table>
             </div>
           </div>
         </div>
-        <br /><br /> <hr>
+        <br /><br />
+        <hr />
         <!-- Envios -->
         <form id="formEnvio" class="row g-3" novalidate>
-        <div class="form-check">
-          <h4>Selecciona el Tipo de Envío</h4>
-          <br />
-          <input
-            class="form-check-input envio"
-            type="radio"
-            name="tipoenvio"
-            id="premium"
-            value="0.15"
-          />
-          <label class="form-check-label" for="premium">
-            Premium 2 a 5 dias(15%)
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input envio"
-            type="radio"
-            name="tipoenvio"
-            id="express"
-            checked
-            value="0.07"
-          />
-          <label class="form-check-label" for="express">
-            Express 5 a 8 dias (7%)
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input envio"
-            type="radio"
-            name="tipoenvio"
-            id="estandar"
-            value="0.05"
-          />
-          <label class="form-check-label" for="estandar">
-            Estándar 12 a 15 dias (5%)
-          </label>
-        </div>
-        <br /><br /> <hr>
-        <h4>Agrega los datos de envío</h4>
+          <div class="form-check">
+            <h4>Selecciona el Tipo de Envío</h4>
+            <br />
+            <input
+              class="form-check-input envio"
+              type="radio"
+              name="tipoenvio"
+              id="premium"
+              value="0.15"
+            />
+            <label class="form-check-label" for="premium">
+              Premium 2 a 5 dias(15%)
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input envio"
+              type="radio"
+              name="tipoenvio"
+              id="express"
+              checked
+              value="0.07"
+            />
+            <label class="form-check-label" for="express">
+              Express 5 a 8 dias (7%)
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input envio"
+              type="radio"
+              name="tipoenvio"
+              id="estandar"
+              value="0.05"
+            />
+            <label class="form-check-label" for="estandar">
+              Estándar 12 a 15 dias (5%)
+            </label>
+          </div>
+          <br /><br />
+          <hr />
+          <h4>Agrega los datos de envío</h4>
           <div class="col-md-4 form-group">
             <label for="calle" class="form-label">Calle</label>
-            <input
-              type="text"
-              class="form-control"
-              id="calle"
-              required
-            />
+            <input type="text" class="form-control" id="calle" required />
             <div class="invalid-feedback">
               <p>Ingrese su dirección</p>
             </div>
           </div>
           <div class="col-md-4 form-group">
             <label for="numero" class="form-label">Número de puerta</label>
-            <input
-              type="number"
-              class="form-control"
-              id="numero"
-              required
-            />
+            <input type="number" class="form-control" id="numero" required />
             <div class="invalid-feedback">
               <p>Ingrese el número de puerta</p>
             </div>
           </div>
           <div class="col-md-4 form-group">
             <label for="esquina" class="form-label">Esquina</label>
-            <input
-              type="text"
-              class="form-control"
-              id="esquina"
-              required
-            />
+            <input type="text" class="form-control" id="esquina" required />
             <div class="invalid-feedback">
               <p>Ingrese su esquina</p>
             </div>
           </div>
           <div class="col-md-4 form-group">
             <label for="ciudad" class="form-label">Ciudad</label>
-            <input
-              type="text"
-              class="form-control"
-              id="ciudad"
-              required
-            />
+            <input type="text" class="form-control" id="ciudad" required />
             <div class="invalid-feedback">
               <p>Ingrese su ciudad</p>
             </div>
           </div>
           <div class="col-md-4 form-group">
-            <label for="departamento" class="form-label"
-              >Departamento</label
-            >
+            <label for="departamento" class="form-label">Departamento</label>
             <select class="form-select" id="departamento" required>
               <option selected disabled value="">
                 Selecciona el Departamento
@@ -235,9 +216,7 @@
             </div>
           </div>
           <div class="col-md-4 form-group">
-            <label for="codigo_postal" class="form-label"
-              >Código Postal</label
-            >
+            <label for="codigo_postal" class="form-label">Código Postal</label>
             <input
               type="number"
               class="form-control"
@@ -247,9 +226,12 @@
             <div class="invalid-feedback">
               <p>Selecciona un código postal válido</p>
             </div>
-          </div><br /><br /><hr>
+          </div>
+          <br /><br />
+          <hr />
           <!-- Costos -->
-          <br><div class="row my-2 ps-2">
+          <br />
+          <div class="row my-2 ps-2">
             <h4>Costos</h4>
             <ul class="list-group">
               <li class="list-group-item">
@@ -257,7 +239,9 @@
                   <span class="fs-5">Subtotal</span>
                   <span class="fs-5">USD <span id="subtotal"></span></span>
                 </div>
-                <p class="text-muted">Costo unitario del producto por cantidad</p>
+                <p class="text-muted">
+                  Costo unitario del producto por cantidad
+                </p>
               </li>
               <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
@@ -275,90 +259,167 @@
             </ul>
           </div>
           <!-- Pago -->
-          <div class="col-12"> <hr>
+          <div class="col-12">
+            <hr />
             <h4>Agrega un método de pago</h4>
             <p class="mb-0">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPago" >Seleccionar método</button>
-              <span id="display-metodo-pago" class="fs-5 small">No ha seleccionado ninguno</span>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#modalPago"
+              >
+                Seleccionar método
+              </button>
+              <span id="display-metodo-pago" class="fs-5 small"
+                >No ha seleccionado ninguno</span
+              >
             </p>
-            <hr>
+            <hr />
           </div>
           <!-- Boton SUBMIT -->
-            <div class="d-grid gap-2">  
-              <button id="submit" class="btn btn-success m-1" type="submit">Comprar</button>            
+          <div class="d-grid gap-2">
+            <button id="submit" class="btn btn-success m-1" type="submit">
+              Comprar
+            </button>
           </div>
         </form>
       </div>
-        <!-- Modal de pago -->  
-<div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Filas del pago -->
-        <div class="row mx-3" id="dummy-modal-form">
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="radio" form="purchase-form" name="payment-method"
-              id="payment-credit-card" required>
-            <label class="form-check-label" for="payment-credit-card">
-              Tarjeta de crédito
-            </label>
-          </div>
-          <hr>
+      <!-- Modal de pago -->
+      <div
+        class="modal fade"
+        id="modalPago"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Forma de pago
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Filas del pago -->
+              <div class="row mx-3" id="dummy-modal-form">
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    form="purchase-form"
+                    name="payment-method"
+                    id="payment-credit-card"
+                    required
+                  />
+                  <label class="form-check-label" for="payment-credit-card">
+                    Tarjeta de crédito
+                  </label>
+                </div>
+                <hr />
 
-          <div class="col-6 mb-3">
-            <label for="credit-card-number" class="form-label">Número de tarjeta</label>
-            <input type="number" id="credit-card-number" name="credit-card-number" form="purchase-form"
-              class="form-control ni-no-arrows" required minlength="16" disabled>
-            <div class="invalid-feedback">
-              Campo obligatorio
-            </div>
-          </div>
-          <div class="col-4 mb-3">
-            <label for="credit-card-sec-code" class="form-label">Código de seg.</label>
-            <input type="number" id="credit-card-sec-code" name="credit-card-sec-code" form="purchase-form" min="0" minlength="3" max="999"
-              class="form-control ni-no-arrows" disabled required >
-            <div class="invalid-feedback">
-              Campo obligatorio
-            </div>
-          </div>
-          <br>
-          <div class="col-6 mb-3">
-            <label for="credit-card-expire-date" class="form-label">Vencimiento (MM/AA)</label>
-            <input type="month" id="credit-card-expire-date" name="credit-card-expire-date" form="purchase-form"
-              size="40" class="form-control" disabled required >
-            <div class="invalid-feedback">
-              Campo obligatorio
-            </div>
-          </div>
+                <div class="col-6 mb-3">
+                  <label for="credit-card-number" class="form-label"
+                    >Número de tarjeta</label
+                  >
+                  <input
+                    type="number"
+                    id="credit-card-number"
+                    name="credit-card-number"
+                    form="purchase-form"
+                    class="form-control ni-no-arrows"
+                    required
+                    minlength="16"
+                    disabled
+                  />
+                  <div class="invalid-feedback">Campo obligatorio</div>
+                </div>
+                <div class="col-4 mb-3">
+                  <label for="credit-card-sec-code" class="form-label"
+                    >Código de seg.</label
+                  >
+                  <input
+                    type="number"
+                    id="credit-card-sec-code"
+                    name="credit-card-sec-code"
+                    form="purchase-form"
+                    min="0"
+                    minlength="3"
+                    max="999"
+                    class="form-control ni-no-arrows"
+                    disabled
+                    required
+                  />
+                  <div class="invalid-feedback">Campo obligatorio</div>
+                </div>
+                <br />
+                <div class="col-6 mb-3">
+                  <label for="credit-card-expire-date" class="form-label"
+                    >Vencimiento (MM/AA)</label
+                  >
+                  <input
+                    type="month"
+                    id="credit-card-expire-date"
+                    name="credit-card-expire-date"
+                    form="purchase-form"
+                    size="40"
+                    class="form-control"
+                    disabled
+                    required
+                  />
+                  <div class="invalid-feedback">Campo obligatorio</div>
+                </div>
 
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="radio" form="purchase-form" name="payment-method"
-              id="payment-bank-account" required>
-            <label class="form-check-label" for="payment-bank-account">
-              Transferencia bancaria
-            </label>
-          </div>
-          <hr>
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    form="purchase-form"
+                    name="payment-method"
+                    id="payment-bank-account"
+                    required
+                  />
+                  <label class="form-check-label" for="payment-bank-account">
+                    Transferencia bancaria
+                  </label>
+                </div>
+                <hr />
 
-          <div class="col-6 mb-3">
-            <label for="bank-account-number" class="form-label">Número de cuenta</label>
-            <input type="number" id="bank-account-number" name="bank-account-number" form="purchase-form"
-              class="form-control ni-no-arrows" disabled required>
-            <div class="invalid-feedback">
-              Campo obligatorio
+                <div class="col-6 mb-3">
+                  <label for="bank-account-number" class="form-label"
+                    >Número de cuenta</label
+                  >
+                  <input
+                    type="number"
+                    id="bank-account-number"
+                    name="bank-account-number"
+                    form="purchase-form"
+                    class="form-control ni-no-arrows"
+                    disabled
+                    required
+                  />
+                  <div class="invalid-feedback">Campo obligatorio</div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  id="btnSeleccionar"
+                >
+                  Seleccionar
+                </button>
+              </div>
             </div>
           </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="btnSeleccionar">Seleccionar</button>
-      </div>
-    </div>
-  </div>
-</div>
     </main>
     <footer class="text-muted">
       <div class="container">
@@ -371,60 +432,44 @@
             >Jovenes a Programar</a
           >
         </p>
-            <!-- Mensaje popUP del submit  -->
+        <!-- Mensaje popUP del submit  -->
 
-            <!-- https://mdbootstrap.com/docs/standard/extended/popup/ -->
-         <div
-            class="alert fade"
-            id="alert-success"
-            role="alert"
-            data-mdb-color="success"
-            data-mdb-position="top-right"
-            data-mdb-stacking="true"
-            data-mdb-width="535px"
-            data-mdb-width="535px"
-            data-mdb-append-to-body="true"
-            data-mdb-hidden="true"
-            data-mdb-autohide="true"
-            data-mdb-delay="2000"
-          >
+        <!-- https://mdbootstrap.com/docs/standard/extended/popup/ -->
+        <div
+          class="alert fade"
+          id="alert-success"
+          role="alert"
+          data-mdb-color="success"
+          data-mdb-position="top-right"
+          data-mdb-stacking="true"
+          data-mdb-width="535px"
+          data-mdb-width="535px"
+          data-mdb-append-to-body="true"
+          data-mdb-hidden="true"
+          data-mdb-autohide="true"
+          data-mdb-delay="2000"
+        >
           A simple success alert with
-          <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+          <a href="#" class="alert-link">an example link</a>. Give it a click if
+          you like.
+        </div>
+
+        <div id="spinner-wrapper">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-
-
-    </footer>
-    
-    
-
-
-    <div id="spinner-wrapper">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        </div>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"
+        ></script>
+        <script src="js/init.js"></script>
+        <script src="js/cart.js"></script>
       </div>
-    </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-    <script src="js/init.js"></script>
-    <script src="js/cart.js"></script>
+    </footer>
   </body>
 </html>
-
-<!-- <body>
-  <main>
-    
-
-
-
-    
-
-    
-</html> -->

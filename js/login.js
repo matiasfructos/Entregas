@@ -1,7 +1,6 @@
 document.getElementById("logInButton").addEventListener("click", () => {
   const email = document.getElementById("email").value;
   const pass = document.getElementById("pass").value;
-  localStorage.setItem("email", document.getElementById("email").value)
 
   let users = JSON.parse(localStorage.getItem("usuarios")) || [];
   let isValid = users.find(
@@ -13,6 +12,7 @@ document.getElementById("logInButton").addEventListener("click", () => {
     let currentUser = users.filter(
       (element) => element.email == email && element.pass == pass
     );
+    console.log(currentUser);
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
     localStorage.setItem("userStatus", true);
     window.location.href = "index.html";

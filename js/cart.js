@@ -31,7 +31,6 @@ function validarNegativo(valor) {
 function carrito(array) {
   const cartItems = document.getElementById("cartItems");
   array.forEach((element) => {
-    console.log(element.unitCost);
     // Crea la fila de la tabla
     cartItems.innerHTML += `
       <tr scope="row">
@@ -127,7 +126,6 @@ function carrito(array) {
     } else if (estandar.checked) {
       valorDelEnvio = valor * estandar.value;
     }
-    console.log(Math.round(valorDelEnvio));
     return Math.round(valorDelEnvio);
   }
 
@@ -154,7 +152,6 @@ function carrito(array) {
 
 //Proceso de validación
 let miFormulario = document.getElementById("formEnvio");
-console.log(miFormulario);
 miFormulario.addEventListener("submit", (e) => {
   let calle = document.getElementById("calle");
   let numero = document.getElementById("numero");

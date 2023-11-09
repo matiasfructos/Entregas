@@ -57,7 +57,7 @@ function getUserStatus() {
 
 // Muestra el nombre de usuario en el navbar
 function showUser() {
-  let firstName = JSON.parse(localStorage.getItem("currentUser"))[0].firstName;
+  let firstName = JSON.parse(localStorage.getItem("currentUser")).firstName;
   document.getElementById("user").innerHTML = "Hola, " + firstName;
 }
 
@@ -90,6 +90,6 @@ const cambiarTema = () => {
 };
 
 function getUserData() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'))[0]
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
   return currentUser
 }

@@ -12,8 +12,7 @@ document.getElementById("logInButton").addEventListener("click", () => {
     let currentUser = users.filter(
       (element) => element.email == email && element.pass == pass
     );
-    console.log(currentUser);
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    localStorage.setItem("currentUser", JSON.stringify(currentUser[0]));
     localStorage.setItem("userStatus", true);
     window.location.href = "index.html";
   } else {

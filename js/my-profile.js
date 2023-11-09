@@ -38,8 +38,6 @@ FILE_INPUT.addEventListener('change', function (e) {
   }
 })
 
-
-
 function loadUserData() {
   const currentUser = getUserData()
 

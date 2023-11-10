@@ -89,30 +89,19 @@
     <main>
       <!-- Carrito -->
       <div class="container">
-        <div class="text-center p-4">
+        <div class="text-center my-4">
           <h2>Carrito de compras</h2>
+          <p>Artículos a comprar</p>
         </div>
-        <div class="row justify-content-md-center">
-          <div class="col-md-8 order-md-1">
-            <h4 class="mb-3">Artículos a comprar</h4>
-            <div class="table-responsive-sm">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Costo</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Subtotal</th>
-                  </tr>
-                </thead>
-                <tbody id="cartItems" class="container w-75"></tbody>
-              </table>
-            </div>
+        <div id="cartItems" class="my-4 border rounded p-3">
+          <div class="row my-4 text-center">
+            <div class="d-none d-md-block col-md-2">Imágen</div>
+            <div class="d-none d-md-block col-md-2">Nombre</div>
+            <div class="d-none d-md-block col-md-2">Costo</div>
+            <div class="d-none d-md-block col-md-2">Cantidad</div>
+            <div class="d-none d-md-block col-md-2">Subtotal</div>
           </div>
         </div>
-        <br /><br />
-        <hr />
         <!-- Envios -->
         <form id="formEnvio" class="row g-3" novalidate>
           <div class="form-check">
@@ -432,10 +421,9 @@
             >Jovenes a Programar</a
           >
         </p>
-        <!-- Mensaje popUP del submit  -->
+        <!-- No sé qué es esto - Mateo -->
 
-        <!-- https://mdbootstrap.com/docs/standard/extended/popup/ -->
-        <div
+        <!-- <div
           class="alert fade"
           id="alert-success"
           role="alert"
@@ -452,8 +440,7 @@
           A simple success alert with
           <a href="#" class="alert-link">an example link</a>. Give it a click if
           you like.
-        </div>
-
+        </div> -->
         <div id="spinner-wrapper">
           <div class="lds-ring">
             <div></div>

@@ -33,23 +33,27 @@ function carrito(array) {
   array.forEach((element) => {
     // Crea la fila de la tabla
     cartItems.innerHTML += `
-      <tr scope="row">
-        <td><img width="150" src=${element.image} alt="Producto"> </td>
-        <td>${element.name}</td>
-        <td>${element.currency} ${element.unitCost}</td>
-        <td><input id="${
-          element.id
-        }" type="number" class="form-control count" value="${
-      element.count
-    }" min="1" onchange="validarNegativo(this)" cost="${element.unitCost}"></td>
-        <td>${element.currency} <span class="${element.id} subtotal">${
-      element.count * element.unitCost
-    }
-      </span></td>
-        <td><button class="btn btn-danger botones" value="${
-          element.id
-        }">Eliminar</button></td>
-      </tr>`;
+    <div class="row align-items-center text-center g-3 my-1 border-bottom">
+      <div class="col-6 col-md-2">
+        <img src=${element.image} class="img-fluid rounded" alt="Producto">
+      </div>
+      <div class="col-6 col-md-2">
+        <h4>${element.name}</h4>
+      </div>
+      <div class="col-6 col-md-2">
+        <h5>${element.currency} ${element.unitCost}</h5>
+      </div>
+      <div class="col-6 col-md-2">
+        <input id="${element.id}" type="number" class="form-control count" value="${element.count}" min="1" onchange="validarNegativo(this)" cost="${element.unitCost}">
+      </div>
+      <div class="col-6 col-md-2">
+        <h5>${element.currency} <span class="${element.id} subtotal">${element.count * element.unitCost}</span></h5>
+      </div>
+      <div class="col-6 col-md-2">
+        <button class="btn btn-danger botones" value="${element.id}">Eliminar</button>
+      </div>
+    </div>
+    `
     total();
   });
   

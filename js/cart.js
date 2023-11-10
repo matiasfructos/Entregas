@@ -1,35 +1,34 @@
-document.addEventListener("DOMContentLoaded", function () {
-  getUserStatus();
-  temaActivo();
-  showUser();
+document.addEventListener('DOMContentLoaded', function () {
+  getUserStatus()
+  temaActivo()
+  showUser()
 
   //Fetch para la información del carrito de compras
   getJSONData(CART_INFO_URL).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      let productos = JSON.parse(localStorage.getItem("carrito")) || [];
-      productos.push(resultObj.data.articles[0]);
-      carrito(productos);
+    if (resultObj.status === 'ok') {
+      let productos = JSON.parse(localStorage.getItem('carrito')) || []
+      productos.push(resultObj.data.articles[0])
+      showCartItems(productos)
     }
-  });
-});
+  })
+})
 
 // Bloque encargado del cierre de sesión
-document.getElementById("cerrar_sesion").addEventListener("click", (a) => {
-  localStorage.removeItem("userStatus");
-  localStorage.removeItem("currentUser");
-  window.location.href = "login.html";
-});
+document.getElementById('cerrar_sesion').addEventListener('click', (a) => {
+  localStorage.removeItem('userStatus')
+  localStorage.removeItem('currentUser')
+  window.location.href = 'login.html'
+})
 
 function validarNegativo(valor) {
   if (valor.value < 1) {
-    valor.value = 1;
-    return valor.value;
+    valor.value = 1
+    return valor.value
   }
 }
 
-//Carta de elementos del carrito
-function carrito(array) {
-  const cartItems = document.getElementById("cartItems");
+function showCartItems(array) {
+  const cartItems = document.getElementById('cartItems')
   array.forEach((element) => {
     // Crea la fila de la tabla
     cartItems.innerHTML += `
@@ -44,139 +43,84 @@ function carrito(array) {
         <h5>${element.currency} ${element.unitCost}</h5>
       </div>
       <div class="col-6 col-md-2">
-        <input id="${element.id}" type="number" class="form-control count" value="${element.count}" min="1" onchange="validarNegativo(this)" cost="${element.unitCost}">
+        <input id="${
+          element.id
+        }" type="number" class="form-control count" value="${
+      element.count
+    }" min="1" onchange="validarNegativo(this); calcSubTotal(this, ${
+      element.unitCost
+    }, ${element.id}); calcTotal()">
       </div>
       <div class="col-6 col-md-2">
-        <h5>${element.currency} <span class="${element.id} subtotal">${element.count * element.unitCost}</span></h5>
+        <h5>${element.currency} <span class="${element.id} subtotal">${
+      element.count * element.unitCost
+    }</span></h5>
       </div>
       <div class="col-6 col-md-2">
-        <button class="btn btn-danger botones" value="${element.id}">Eliminar</button>
+        <button class="btn btn-danger botones" value="${
+          element.id
+        }" onclick="removeProduct(this, ${element.id})">Eliminar</button>
       </div>
     </div>
     `
-    total();
-  });
-  
-  //Botón de eliminar
-  let botones = document.querySelectorAll(".botones");
-  botones.forEach((elemento) => {
-    elemento.addEventListener("click", (e) => {
-      let productos = JSON.parse(localStorage.getItem("carrito")) || [];
-      let filtrados = productos.filter(
-        (elemento) => elemento.id != e.target.value
-      );
-      localStorage.setItem("carrito", JSON.stringify(filtrados));
-      e.target.parentElement.parentElement.remove();
-      total();
-    });
-  });
+  })
+  calcTotal()
+}
 
-  //Actualización del subtotal en tiempo real
-  let productos = document.querySelectorAll(".count");
-  productos.forEach((elemento) => {
-    elemento.addEventListener("input", (e) => {
-      fetch(
-        `https://japceibal.github.io/emercado-api/products/${e.target.id}.json`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (e.target.value > 0) {
-            let span = document.getElementsByClassName(e.target.id);
-            span[0].textContent = data.cost * e.target.value;
-          }
-        });
-    });
-    elemento.addEventListener("change", (e) => {
-      total();
-    });
-  });
+function calcSubTotal(elemento, precio, id) {
+  let subTotalValue = elemento.value * precio
+  let subTotalField = document.getElementsByClassName(id)[0]
+  subTotalField.innerHTML = subTotalValue
+}
 
-  //Valor del total
-  let valorTotal;
-  //Función que busca todos los subtotales, los suma y agrega el coste de envío
-  function total() {
-    let subtotales = document.querySelectorAll(".subtotal");
-    let total = [];
-    subtotales.forEach((elemento) => {
-      let parseSubtotal = parseInt(elemento.innerHTML);
-      total.push(parseSubtotal);
-    });
-    let totalHTML = sumIntegersInArray(total);
-    let envioTotal = envio(totalHTML) + totalHTML;
-    document.getElementById("precioEnvio").innerHTML = envio(totalHTML);
-    document.getElementById("subtotal").innerHTML = totalHTML;
-    document.getElementById("total").innerHTML = Math.round(envioTotal);
-  }
-  //Función que te devuelve la suma de todos los elementos del array
-  function sumIntegersInArray(arr) {
-    let sum = 0;
-    for (let i = 0; i < arr.length; i++) {
-      if (Number.isInteger(arr[i])) {
-        sum += arr[i];
-      }
-    }
-    return sum;
-  }
-  //Función que altera un valor según el tipo de envío
-  function envio(valor) {
-    let premium = document.getElementById("premium");
-    let express = document.getElementById("express");
-    let estandar = document.getElementById("estandar");
-    let valorDelEnvio;
-    if (premium.checked) {
-      valorDelEnvio = valor * premium.value;
-    } else if (express.checked) {
-      valorDelEnvio = valor * express.value;
-    } else if (estandar.checked) {
-      valorDelEnvio = valor * estandar.value;
-    }
-    return Math.round(valorDelEnvio);
-  }
+function calcTotal(valorEnvio) {
+  let subTotalArray = document.querySelectorAll('.subtotal')
+  let envio = valorEnvio ?? 0.07
+  let sumOfSubTotal = 0
+  subTotalArray.forEach((elemento) => {
+    sumOfSubTotal += parseInt(elemento.innerHTML)
+  })
 
-  //Se añade un evento a los radios para que al marcarlos afecten el total
-  document.getElementById("premium").addEventListener("change", function () {
-    if (this.checked) {
-      total();
-    }
-  });
+  let endSubTotal = document.getElementById('subtotal')
+  let endEnvio = document.getElementById('precioEnvio')
+  let endTotal = document.getElementById('total')
 
-  document.getElementById("express").addEventListener("change", function () {
-    if (this.checked) {
-      total();
-    }
-  });
+  endSubTotal.innerHTML = sumOfSubTotal
+  endEnvio.innerHTML = Math.floor(sumOfSubTotal * envio)
+  endTotal.innerHTML = Math.floor(sumOfSubTotal * envio + sumOfSubTotal)
+}
 
-  document.getElementById("estandar").addEventListener("change", function () {
-    if (this.checked) {
-      total();
-    }
-  });
-
+function removeProduct(elemento, id) {
+  let productos = JSON.parse(localStorage.getItem('carrito')) || []
+  let filtrados = productos.filter((elemento) => elemento.id != id)
+  localStorage.setItem('carrito', JSON.stringify(filtrados))
+  elemento.parentElement.parentElement.remove()
+  calcTotal()
 }
 
 //Proceso de validación
-let miFormulario = document.getElementById("formEnvio");
-miFormulario.addEventListener("submit", (e) => {
-  let calle = document.getElementById("calle");
-  let numero = document.getElementById("numero");
-  let esquina = document.getElementById("esquina");
-  let ciudad = document.getElementById("ciudad");
-  let departamento = document.getElementById("departamento");
-  let codigo_postal = document.getElementById("codigo_postal");
-  let premium = document.getElementById("premium");
-  let express = document.getElementById("express");
-  let estandar = document.getElementById("estandar");
+let miFormulario = document.getElementById('formEnvio')
+miFormulario.addEventListener('submit', (e) => {
+  let calle = document.getElementById('calle')
+  let numero = document.getElementById('numero')
+  let esquina = document.getElementById('esquina')
+  let ciudad = document.getElementById('ciudad')
+  let departamento = document.getElementById('departamento')
+  let codigo_postal = document.getElementById('codigo_postal')
+  let premium = document.getElementById('premium')
+  let express = document.getElementById('express')
+  let estandar = document.getElementById('estandar')
 
-  let productosValidacion = document.querySelectorAll(".count");
+  let productosValidacion = document.querySelectorAll('.count')
 
   productosValidacion.forEach((elemento) => {
     if (!elemento.checkValidity()) {
-      elemento.setAttribute("class", "form-control count is-invalid");
-      e.preventDefault();
+      elemento.setAttribute('class', 'form-control count is-invalid')
+      e.preventDefault()
     } else {
-      elemento.setAttribute("class", "form-control count is-valid");
+      elemento.setAttribute('class', 'form-control count is-valid')
     }
-  });
+  })
 
   if (
     calle.checkValidity() &&
@@ -186,20 +130,19 @@ miFormulario.addEventListener("submit", (e) => {
     departamento.checkValidity() &&
     codigo_postal.checkValidity() &&
     ((cardNum.checkValidity() &&
-        cardSec.checkValidity() &&
-        cardVen.checkValidity()) ||
-        (cuenta.checkValidity())
-    ) &&
+      cardSec.checkValidity() &&
+      cardVen.checkValidity()) ||
+      cuenta.checkValidity()) &&
     (premium.checkValidity() ||
       express.checkValidity() ||
       estandar.checkValidity()) &&
     (credito.checkValidity() || transferencia.checkValidity())
   ) {
-    alert("Formulario enviado con éxito!");
-    localStorage.removeItem("carrito");
-    document.getElementById("cartItems").innerHTML = "";
+    alert('Formulario enviado con éxito!')
+    localStorage.removeItem('carrito')
+    document.getElementById('cartItems').innerHTML = ''
   } else {
-    e.preventDefault();
+    e.preventDefault()
   }
 
   if (
@@ -207,144 +150,147 @@ miFormulario.addEventListener("submit", (e) => {
     !express.checkValidity() ||
     estandar.checkValidity()
   ) {
-    const checkedRadio = document.querySelector('input[type="radio"]:checked');
-    checkedRadio.setAttribute("class", "form-check-input envio is-valid");
-    e.preventDefault();
+    const checkedRadio = document.querySelector('input[type="radio"]:checked')
+    checkedRadio.setAttribute('class', 'form-check-input envio is-valid')
+    e.preventDefault()
   } else {
-    checkedRadio.setAttribute("class", "form-check-input envio is-invalid");
+    checkedRadio.setAttribute('class', 'form-check-input envio is-invalid')
   }
 
   if (!calle.checkValidity()) {
-    calle.setAttribute("class", "form-control is-invalid");
-    e.preventDefault();
+    calle.setAttribute('class', 'form-control is-invalid')
+    e.preventDefault()
   } else {
-    calle.setAttribute("class", "form-control is-valid");
+    calle.setAttribute('class', 'form-control is-valid')
   }
 
   if (!codigo_postal.checkValidity()) {
-    codigo_postal.setAttribute("class", "form-control is-invalid");
-    e.preventDefault();
+    codigo_postal.setAttribute('class', 'form-control is-invalid')
+    e.preventDefault()
   } else {
-    codigo_postal.setAttribute("class", "form-control is-valid");
+    codigo_postal.setAttribute('class', 'form-control is-valid')
   }
 
   if (!numero.checkValidity()) {
-    numero.setAttribute("class", "form-control is-invalid");
-    e.preventDefault();
+    numero.setAttribute('class', 'form-control is-invalid')
+    e.preventDefault()
   } else {
-    numero.setAttribute("class", "form-control is-valid");
+    numero.setAttribute('class', 'form-control is-valid')
   }
 
   if (!esquina.checkValidity()) {
-    esquina.setAttribute("class", "form-control is-invalid");
-    e.preventDefault();
+    esquina.setAttribute('class', 'form-control is-invalid')
+    e.preventDefault()
   } else {
-    esquina.setAttribute("class", "form-control is-valid");
+    esquina.setAttribute('class', 'form-control is-valid')
   }
 
   if (!ciudad.checkValidity()) {
-    ciudad.setAttribute("class", "form-control is-invalid");
-    e.preventDefault();
+    ciudad.setAttribute('class', 'form-control is-invalid')
+    e.preventDefault()
   } else {
-    ciudad.setAttribute("class", "form-control is-valid");
+    ciudad.setAttribute('class', 'form-control is-valid')
   }
 
   if (!departamento.checkValidity()) {
-    departamento.setAttribute("class", "form-control is-invalid");
-    e.preventDefault();
+    departamento.setAttribute('class', 'form-control is-invalid')
+    e.preventDefault()
   } else {
-    departamento.setAttribute("class", "form-control is-valid");
+    departamento.setAttribute('class', 'form-control is-valid')
   }
 
   if (credito.checked) {
     if (!cardNum.checkValidity()) {
-      cardNum.setAttribute("class", "form-control is-invalid");
-      e.preventDefault();
-      spanMetodo.setAttribute("style", "color:red");
+      cardNum.setAttribute('class', 'form-control is-invalid')
+      e.preventDefault()
+      spanMetodo.setAttribute('style', 'color:red')
     } else {
-      cardNum.setAttribute("class", "form-control is-valid");
-      spanMetodo.setAttribute("style", "color:white");
+      cardNum.setAttribute('class', 'form-control is-valid')
+      spanMetodo.setAttribute('style', 'color:white')
     }
     if (!cardSec.checkValidity()) {
-      cardSec.setAttribute("class", "form-control is-invalid");
-      e.preventDefault();
-      spanMetodo.setAttribute("style", "color:red");
+      cardSec.setAttribute('class', 'form-control is-invalid')
+      e.preventDefault()
+      spanMetodo.setAttribute('style', 'color:red')
     } else {
-      cardSec.setAttribute("class", "form-control is-valid");
-      spanMetodo.setAttribute("style", "color:white");
+      cardSec.setAttribute('class', 'form-control is-valid')
+      spanMetodo.setAttribute('style', 'color:white')
     }
     if (!cardVen.checkValidity()) {
-      cardVen.setAttribute("class", "form-control is-invalid");
-      e.preventDefault();
-      spanMetodo.setAttribute("style", "color:red");
+      cardVen.setAttribute('class', 'form-control is-invalid')
+      e.preventDefault()
+      spanMetodo.setAttribute('style', 'color:red')
     } else {
-      cardVen.setAttribute("class", "form-control is-valid");
-      spanMetodo.setAttribute("style", "color:white");
+      cardVen.setAttribute('class', 'form-control is-valid')
+      spanMetodo.setAttribute('style', 'color:white')
     }
   } else if (transferencia.checked) {
     if (!cuenta.checkValidity()) {
-      cuenta.setAttribute("class", "form-control is-invalid");
-      e.preventDefault();
-      spanMetodo.setAttribute("style", "color:red");
+      cuenta.setAttribute('class', 'form-control is-invalid')
+      e.preventDefault()
+      spanMetodo.setAttribute('style', 'color:red')
     } else {
-      cuenta.setAttribute("class", "form-control is-valid");
-      spanMetodo.setAttribute("style", "color:white");
+      cuenta.setAttribute('class', 'form-control is-valid')
+      spanMetodo.setAttribute('style', 'color:white')
     }
   } else {
-    e.preventDefault();
-    spanMetodo.setAttribute("style", "color:red");
+    e.preventDefault()
+    spanMetodo.setAttribute('style', 'color:red')
   }
-});
+})
 
 //Selección de método de compra
-let credito = document.getElementById("payment-credit-card");
-let cardNum = document.getElementById("credit-card-number");
-let cardSec = document.getElementById("credit-card-sec-code");
-let cardVen = document.getElementById("credit-card-expire-date");
-let cuenta = document.getElementById("bank-account-number");
-let transferencia = document.getElementById("payment-bank-account");
-let spanMetodo = document.getElementById("display-metodo-pago");
-let botonSeleccionar = document.getElementById("btnSeleccionar");
+let credito = document.getElementById('payment-credit-card')
+let cardNum = document.getElementById('credit-card-number')
+let cardSec = document.getElementById('credit-card-sec-code')
+let cardVen = document.getElementById('credit-card-expire-date')
+let cuenta = document.getElementById('bank-account-number')
+let transferencia = document.getElementById('payment-bank-account')
+let spanMetodo = document.getElementById('display-metodo-pago')
+let botonSeleccionar = document.getElementById('btnSeleccionar')
 
-credito.addEventListener("input", () => {
+credito.addEventListener('input', () => {
   if (credito.checked == true) {
-    cuenta.setAttribute("disabled", "true");
-    cardNum.removeAttribute("disabled");
-    cardSec.removeAttribute("disabled");
-    cardVen.removeAttribute("disabled");
-    cuenta.value = "";
-    spanMetodo.textContent = "El método seleccionado es: tarjeta de crédito";
+    cuenta.setAttribute('disabled', 'true')
+    cardNum.removeAttribute('disabled')
+    cardSec.removeAttribute('disabled')
+    cardVen.removeAttribute('disabled')
+    cuenta.value = ''
+    spanMetodo.textContent = 'El método seleccionado es: tarjeta de crédito'
   }
-});
+})
 
-transferencia.addEventListener("input", () => {
+transferencia.addEventListener('input', () => {
   if (transferencia.checked == true) {
-    cardNum.setAttribute("disabled", "true");
-    cardSec.setAttribute("disabled", "true");
-    cardVen.setAttribute("disabled", "true");
-    cuenta.removeAttribute("disabled");
-    cardNum.value = "";
-    cardSec.value = "";
-    cardVen.value = "";
-    spanMetodo.textContent = "El método seleccionado es: transferencia";
+    cardNum.setAttribute('disabled', 'true')
+    cardSec.setAttribute('disabled', 'true')
+    cardVen.setAttribute('disabled', 'true')
+    cuenta.removeAttribute('disabled')
+    cardNum.value = ''
+    cardSec.value = ''
+    cardVen.value = ''
+    spanMetodo.textContent = 'El método seleccionado es: transferencia'
   }
-});
+})
 
-
-botonSeleccionar.addEventListener("click", (event) => {
+botonSeleccionar.addEventListener('click', (event) => {
   if (credito.checked) {
-    if (!cardNum.checkValidity() || !cardSec.checkValidity() || !cardVen.checkValidity()) {
-      cardNum.reportValidity();
-      cardSec.reportValidity();
-      cardVen.reportValidity();
+    if (
+      !cardNum.checkValidity() ||
+      !cardSec.checkValidity() ||
+      !cardVen.checkValidity()
+    ) {
+      cardNum.reportValidity()
+      cardSec.reportValidity()
+      cardVen.reportValidity()
     } else {
-      botonSeleccionar.setAttribute("data-bs-dismiss", "modal");
+      botonSeleccionar.setAttribute('data-bs-dismiss', 'modal')
     }
   } else if (transferencia.checked) {
     if (!cuenta.checkValidity()) {
-      cuenta.reportValidity();
+      cuenta.reportValidity()
     } else {
-      botonSeleccionar.setAttribute("data-bs-dismiss", "modal");
+      botonSeleccionar.setAttribute('data-bs-dismiss', 'modal')
     }
   }
-});
+})

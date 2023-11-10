@@ -43,9 +43,7 @@ function showCartItems(array) {
         <h5>${element.currency} ${element.unitCost}</h5>
       </div>
       <div class="col-6 col-md-2">
-        <input id="${
-          element.id
-        }" type="number" class="form-control count" value="${
+        <input id="${element.id}" type="number" class="form-control" value="${
       element.count
     }" min="1" onchange="validarNegativo(this); calcSubTotal(this, ${
       element.unitCost
@@ -98,6 +96,15 @@ function removeProduct(elemento, id) {
   calcTotal()
 }
 
+function validateInput(input, event) {
+  if (!input.checkValidity()) {
+    input.setAttribute('class', 'form-control is-invalid')
+    event.preventDefault()
+  } else {
+    input.setAttribute('class', 'form-control is-valid')
+  }
+}
+
 //Proceso de validación
 let miFormulario = document.getElementById('formEnvio')
 miFormulario.addEventListener('submit', (e) => {
@@ -111,16 +118,12 @@ miFormulario.addEventListener('submit', (e) => {
   let express = document.getElementById('express')
   let estandar = document.getElementById('estandar')
 
-  let productosValidacion = document.querySelectorAll('.count')
-
-  productosValidacion.forEach((elemento) => {
-    if (!elemento.checkValidity()) {
-      elemento.setAttribute('class', 'form-control count is-invalid')
-      e.preventDefault()
-    } else {
-      elemento.setAttribute('class', 'form-control count is-valid')
-    }
-  })
+  validateInput(calle, e)
+  validateInput(numero, e)
+  validateInput(esquina, e)
+  validateInput(ciudad, e)
+  validateInput(departamento, e)
+  validateInput(codigo_postal, e)
 
   if (
     calle.checkValidity() &&
@@ -133,9 +136,6 @@ miFormulario.addEventListener('submit', (e) => {
       cardSec.checkValidity() &&
       cardVen.checkValidity()) ||
       cuenta.checkValidity()) &&
-    (premium.checkValidity() ||
-      express.checkValidity() ||
-      estandar.checkValidity()) &&
     (credito.checkValidity() || transferencia.checkValidity())
   ) {
     alert('Formulario enviado con éxito!')
@@ -143,60 +143,6 @@ miFormulario.addEventListener('submit', (e) => {
     document.getElementById('cartItems').innerHTML = ''
   } else {
     e.preventDefault()
-  }
-
-  if (
-    !premium.checkValidity() ||
-    !express.checkValidity() ||
-    estandar.checkValidity()
-  ) {
-    const checkedRadio = document.querySelector('input[type="radio"]:checked')
-    checkedRadio.setAttribute('class', 'form-check-input envio is-valid')
-    e.preventDefault()
-  } else {
-    checkedRadio.setAttribute('class', 'form-check-input envio is-invalid')
-  }
-
-  if (!calle.checkValidity()) {
-    calle.setAttribute('class', 'form-control is-invalid')
-    e.preventDefault()
-  } else {
-    calle.setAttribute('class', 'form-control is-valid')
-  }
-
-  if (!codigo_postal.checkValidity()) {
-    codigo_postal.setAttribute('class', 'form-control is-invalid')
-    e.preventDefault()
-  } else {
-    codigo_postal.setAttribute('class', 'form-control is-valid')
-  }
-
-  if (!numero.checkValidity()) {
-    numero.setAttribute('class', 'form-control is-invalid')
-    e.preventDefault()
-  } else {
-    numero.setAttribute('class', 'form-control is-valid')
-  }
-
-  if (!esquina.checkValidity()) {
-    esquina.setAttribute('class', 'form-control is-invalid')
-    e.preventDefault()
-  } else {
-    esquina.setAttribute('class', 'form-control is-valid')
-  }
-
-  if (!ciudad.checkValidity()) {
-    ciudad.setAttribute('class', 'form-control is-invalid')
-    e.preventDefault()
-  } else {
-    ciudad.setAttribute('class', 'form-control is-valid')
-  }
-
-  if (!departamento.checkValidity()) {
-    departamento.setAttribute('class', 'form-control is-invalid')
-    e.preventDefault()
-  } else {
-    departamento.setAttribute('class', 'form-control is-valid')
   }
 
   if (credito.checked) {
